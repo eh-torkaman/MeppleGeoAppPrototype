@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as GeoJSON from 'geojson';
@@ -42,7 +43,7 @@ export class GeoJsonsService {
 
   private fetchData = (fn: GeoJsonFileNameEnum) =>
     this.httpClient.get<GeoJSON.FeatureCollection>(
-      `/assets/geojson/${fn}.geojson?version=1`
+      `${environment.assetsUrl}/geojson/${fn}.geojson?version=324`
     );
 
   private _DeepCopyAndFlattened = <T>(value: T): T =>
