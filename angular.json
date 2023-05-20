@@ -39,7 +39,7 @@
             "styles": [
               "src/styles.scss",
               "node_modules/leaflet/dist/leaflet.css",
-              "node_modules/Leaflet.markercluster/dist/MarkerCluster.css",
+              "src/static-files/MarkerCluster.css",
               "src/custom-theme.scss"
             ],
             "scripts": [

@@ -1,3 +1,15 @@
+github actions err...
+so i remove "node_modules/Leaflet.markercluster/dist/MarkerCluster.css" from 
+ "styles": [
+              "src/styles.scss",
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/Leaflet.markercluster/dist/MarkerCluster.css",
+              "src/custom-theme.scss"
+            ],
+in angular.json and added manually
+
+
+
  ng build --base-href "https://eh-torkaman.github.io/testMeppleProfile/"
 
 rename pathes ./assets to ./testMeppleProfile/assets
