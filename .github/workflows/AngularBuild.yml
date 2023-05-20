@@ -1,0 +1,23 @@
+name: mepple geo App workflow 
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+        tags:
+            - ci
+jobs:
+    deploy:
+        runs-on: ubuntu-18.04
+        steps:
+            - name: get code
+              uses: actions/checkout@v3
+            - name: install dependencies
+              run: npm ci
+            - name: build angular
+              run: npm run ng build
+
+
+            
+
+  
