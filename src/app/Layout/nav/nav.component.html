@@ -1,0 +1,25 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="'dialog'" mode=over [opened]=false>
+    <mat-toolbar>TAUW Profile</mat-toolbar>
+
+    <mat-nav-list>
+
+      <a *ngFor="let item of menuItems" mat-list-item [routerLink]="'/'+item.path"> {{item.text | titlecase}} </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content #sidenavContent>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+
+      <span>GeoApp TAUW TEAM</span>
+
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

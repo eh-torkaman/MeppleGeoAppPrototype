@@ -1,0 +1,4 @@
+ ng build --base-href "https://eh-torkaman.github.io/testMeppleProfile/"
+
+rename pathes ./assets to ./testMeppleProfile/assets
+ient.get(`/assets/geojson/${i}.geojson`

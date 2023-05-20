@@ -1,0 +1,37 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="false">
+
+  <mat-drawer #drawer mode="push" opened="true" position="start">
+
+    <app-side-views></app-side-views>
+
+
+
+    <mat-accordion class="example-headers-align" multi>
+
+    </mat-accordion>
+
+
+    <div style="border:3px solid red;min-width:500px; min-height: 100px;background-color: black;">
+
+
+
+
+
+    </div>
+
+
+  </mat-drawer>
+
+
+  <mat-drawer-content>
+    <div #map class="map"></div>
+
+    <button mat-raised-button (click)="toggleClicked(drawer.toggle())">Toggle drawer</button>
+
+
+    <button mat-raised-button (click)="GetMapState()"> Print State</button>
+    <button mat-raised-button (click)="SetMapState()">Set State</button>
+  </mat-drawer-content>
+
+
+</mat-drawer-container>
