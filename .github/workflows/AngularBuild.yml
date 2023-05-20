@@ -28,7 +28,7 @@ jobs:
             - name: install dependencies
               run: npm ci
             - name: build angular
-              run: npm run ng build --base-href "https://eh-torkaman.github.io/MeppleGeoAppPrototype/"
+              run: npm run buildForGit
             - name: upload artifact
               uses: actions/upload-artifact@v3
               with:

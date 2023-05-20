@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "buildForGit":"ng build --base-href \"https://eh-torkaman.github.io/MeppleGeoAppPrototype/\""
   },
   "private": true,
   "dependencies": {
