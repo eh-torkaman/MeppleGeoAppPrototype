@@ -1,5 +1,5 @@
 github actions err...
-so i remove "node_modules/Leaflet.markercluster/dist/MarkerCluster.css" from 
+so i remove "node_modules/Leaflet.markercluster/dist/MarkerCluster.css" from
  "styles": [
               "src/styles.scss",
               "node_modules/leaflet/dist/leaflet.css",
@@ -10,7 +10,7 @@ in angular.json and added manually
 
 
 
- ng build --base-href "https://eh-torkaman.github.io/testMeppleProfile/"
+ ng build --base-href "https://eh-torkaman.github.io/MeppleGeoAppPrototype/"
 
 rename pathes ./assets to ./testMeppleProfile/assets
 ient.get(`/assets/geojson/${i}.geojson`
