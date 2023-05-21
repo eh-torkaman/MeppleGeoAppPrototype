@@ -1,5 +1,9 @@
 # GeoAppTest
 
+it's a simple prototype about some features - 
+just visit this:
+https://eh-torkaman.github.io/MeppleGeoAppPrototype/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.6.
 
 ## Development server
