@@ -51,6 +51,8 @@ import { mapViewStateInterface } from '../geojson.interfaces/_SharedTypes';
 import { CRS } from 'leaflet';
 import {
   DrawCluster_INHABITANTS,
+    DrawCluster_Netload_KWH,
+  DrawCluster_Netload_M3,
   IRemovableLayers,
   drawClusterRoofArea,
 } from './drawCluster';
@@ -140,6 +142,29 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     ]).subscribe(([vis, roadsLines]) => {
       this.drawRoadLines(roadsLines, vis);
     });
+
+
+    combineLatest([
+      this.Setting$.pipe(
+        map((set) => set.cluster_VERBRUIK_KWH),
+        distinctUntilChanged()
+      ),
+      this.Setting$.pipe(
+        map((set) => set.cluster_VERBRUIK_M3),
+        distinctUntilChanged()
+      ),
+      this.NetloadImport$,
+    ]).subscribe(
+      ([
+        visibile_KWH,
+        visibile_M3,
+        netload,
+      ])=>{
+        this.initLayerClusterNetload(netload,visibile_KWH,visibile_M3)
+        
+      })
+
+        
 
     combineLatest([
       this.Setting$.pipe(
@@ -258,7 +283,25 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     }).addTo(this.map);
   };
 
-  removableLayers: IRemovableLayers[] = [];
+  removableLayersInitNetload: IRemovableLayers[] = [];
+
+  initLayerClusterNetload = (
+    ds: undefined | NetloadImportCollection,
+    visibile_KWH: boolean,
+    visibile_M3:boolean
+  ) => {
+    if (!ds) return;
+
+    this.removableLayersInitNetload.forEach((el) => el.DestroyClusters());
+    if (visibile_KWH)
+      this.removableLayersInitNetload.push(new DrawCluster_Netload_KWH(ds, this.map));
+
+      if (visibile_M3)
+      this.removableLayersInitNetload.push(new DrawCluster_Netload_M3 (ds, this.map));
+    
+  };
+
+  removableLayersInitAddress: IRemovableLayers[] = [];
 
   initLayerAddreses = (
     ds: undefined | AdressesCollection,
@@ -266,11 +309,11 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
   ) => {
     if (!ds) return;
 
-    this.removableLayers.forEach((el) => el.DestroyClusters());
+    this.removableLayersInitAddress.forEach((el) => el.DestroyClusters());
     if (setting.populationClusterd)
-      this.removableLayers.push(new DrawCluster_INHABITANTS(ds, this.map));
+      this.removableLayersInitAddress.push(new DrawCluster_INHABITANTS(ds, this.map));
     if (setting.roofArea)
-      this.removableLayers.push(new drawClusterRoofArea(ds, this.map));
+      this.removableLayersInitAddress.push(new drawClusterRoofArea(ds, this.map));
   };
   toggleClicked(tt: any) {
     setTimeout(() => {
@@ -340,15 +383,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
       return COLOR_SCALE[i] || COLOR_SCALE[COLOR_SCALE.length - 1];
     };
 
-    let getTooltip = ({ object }: { object: any }) => {
-      return (
-        object &&
-        `Average Property Value
-        ${object.properties.valuePerSqm}
-        Growth
-        ${Math.round(object.properties.growth * 100)}`
-      );
-    };
+   
 
     const deckLayer = new LeafletLayer({
       views: [

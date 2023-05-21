@@ -15,6 +15,8 @@ export interface LayersSetting {
   floorArea: boolean;
   buildings: boolean;
   energyLables: boolean;
+  cluster_VERBRUIK_KWH:boolean;
+  cluster_VERBRUIK_M3:boolean;
   energyConsumptionByStreets_KWH: boolean;
   energyConsumptionByStreets_M3:boolean;
   roads: boolean;
@@ -52,7 +54,9 @@ export const initialState: Readonly<globalStateInterface> = {
       floorArea: false,
       roofArea: false,
       buildings: false,
-      energyLables: true,
+      energyLables: false,
+      cluster_VERBRUIK_KWH:false,
+      cluster_VERBRUIK_M3:false,
       roads: false,
       energyConsumptionByStreets_KWH: false,
       energyConsumptionByStreets_M3:false

@@ -6,7 +6,7 @@ import { IEnviroment } from "./environment.interface";
 
 export const environment :IEnviroment = {
   production: false,
-  assetsUrl:'./MeppleGeoAppPrototype/assets/'
+  assetsUrl:'./assets'
 };
 
 /*

@@ -49,10 +49,9 @@
         background-color: rgba(241, 128, 23, 0.2);
         }
 
-    .FLOOR_SPACE_M2{
-        border: 3px solid rgba(146, 42, 16, 0.714);
-        margin: 10px;
-    }
+
+
+   
 
     .INHABITANTS{
         border: 3px dashed rgba(0, 139, 125, 0.841)  ;
@@ -69,6 +68,10 @@
         border-radius:25%
     }
 
+    .FLOOR_SPACE_M2{
+        border: 3px solid rgba(146, 42, 16, 0.714);
+        margin: 10px;
+    }
     .FLOOR_SPACE_M2_Marker{
         margin: 10px;
          border: 3px solid rgba(146, 42, 16, 0.714);
@@ -77,6 +80,42 @@
          font-size: medium;
          display: inline-block;
          border-radius:10%;
+    }
+
+
+    .Netload_KWH{
+        border: 3px dashed rgba(23, 54, 232, 0.735)  ;
+        margin: 6px;
+    }
+
+    .Netload_KWH_Marker{
+        border: 3px dashed rgba(242, 10, 153, 0.841)  ;
+        width: auto;
+        height: auto;
+        font-size: medium;
+        display: inline-block;
+        margin: 6px;
+        border-radius:25%
+    }
+
+
+
+    .Netload_M3{
+        border: 3px dashed rgba(234, 84, 9, 0.735)  ;
+        margin: -10px;
+        color: rgb(28, 28, 9);
+    }
+
+    .Netload_M3_Marker{
+        background-color: #1890bb69;
+        color: rgb(236, 239, 17);
+        border: 3px dashed rgba(13, 217, 240, 0.94)  ;
+        width: auto;
+        height: auto;
+        font-size: medium;
+        display: inline-block;
+        margin: -10px;
+        border-radius:25%
     }
     // .mycluster_FLOOR_SPACE_M2 {
     // }
