@@ -1,25 +1,20 @@
 
-<ng-container *ngIf="{data:setting$ | async } as ds"></ng-container>
 
+<div class="checkBoxesWrapper">
 
 <mat-checkbox [checked]="layersSetting.populationClusterd"  (change)="onChangCheckBox('populationClusterd', $event.checked)">  population clusters </mat-checkbox>
 <!-- <mat-checkbox  [checked]="layersSetting.floorArea"  (change)="onChangCheckBox('floorArea', $event.checked)">  floorArea </mat-checkbox> -->
 <mat-checkbox  [checked]="layersSetting.roofArea"  (change)="onChangCheckBox('roofArea', $event.checked)">  Roof clusters</mat-checkbox>
-<br/>
 <mat-checkbox  [checked]="layersSetting.cluster_VERBRUIK_KWH"  (change)="onChangCheckBox('cluster_VERBRUIK_KWH', $event.checked)"> VERBRUIK_KWH clusters</mat-checkbox>
 <mat-checkbox  [checked]="layersSetting.cluster_VERBRUIK_M3"  (change)="onChangCheckBox('cluster_VERBRUIK_M3', $event.checked)">  VERBRUIK_M3 clusters</mat-checkbox>
 
-<br/>
 <mat-checkbox  [checked]="layersSetting.buildings"  (change)="onChangCheckBox('buildings', $event.checked)">  buildings </mat-checkbox>
 <mat-checkbox  [checked]="layersSetting.energyLables"  (change)="onChangCheckBox('energyLables', $event.checked)">  energyLables </mat-checkbox>
-<br/>
 <mat-checkbox  [checked]="layersSetting.energyLables"  (change)="onChangCheckBox('energyLables', $event.checked)">  energyLables </mat-checkbox>
-<br/>
 <mat-checkbox  [checked]="layersSetting.roads"  (change)="onChangCheckBox('roads', $event.checked)">  raods </mat-checkbox>
-<br/>
 <mat-checkbox  [checked]="layersSetting.energyConsumptionByStreets_KWH"  (change)="onChangCheckBox('energyConsumptionByStreets_KWH', $event.checked)"> 
     Sum of Energy Consumption by Streets KWH</mat-checkbox>
 
-    <br/>
 <mat-checkbox  [checked]="layersSetting.energyConsumptionByStreets_M3"  (change)="onChangCheckBox('energyConsumptionByStreets_M3', $event.checked)"> 
     Sum of Energy Consumption by Streets  M3</mat-checkbox>
+</div>

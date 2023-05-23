@@ -101,8 +101,6 @@ export class RegionTreeComponent implements OnInit {
     this.Neighborhoods$.subscribe((neighborhoods) => {
       if (neighborhoods?.features)
         this._database = new ChecklistDatabase(neighborhoods.features);
-      // this.checklistSelection.select(...descendants)
-      // this.checklistSelection.select(  this._database.data )
 
       this.dataSource.data = this._database.data;
 
@@ -114,9 +112,7 @@ export class RegionTreeComponent implements OnInit {
 
     this.checklistSelection.changed
       .pipe(
-        //  tap((_) => console.log('checklistSelection.changed ')),
         debounceTime(1000)
-        //   tap((_) => console.log('checklistSelection.changed after debound'))
       )
       .subscribe((rs) => {
         console.log(this.checklistSelection.selected);
