@@ -54,7 +54,7 @@ class ChecklistDatabase {
 
   constructor(treeData: NTree[]) {
     let rootNode = new RegionNode();
-    rootNode.item = 'ROOT';
+    rootNode.item = 'All Regions';
     rootNode.feature = turf.polygon(
       InitialFilteredViewPolygonCoordinates
     ) as NTree;
@@ -71,26 +71,6 @@ class ChecklistDatabase {
     level: number,
     parentId: number
   ): RegionNode[] | undefined {
-    /*
- let newNfs = neighborhoodsFeatures.filter(
-      (t) => t.properties.PARENT_ZONE === parentId
-    );
-    // console.log('build tree: level',level,' parentId ',parentId)
-    if (!newNfs || newNfs.length == 0) return;
-    return newNfs.map((node) => {
-      let newNode = new RegionNode();
-      newNode.ZoneId = node.properties.ID;
-      newNode.item = node.properties.NAME + "( "+ node.properties.area + " )";
-      newNode.children = this.buildTree(
-        neighborhoodsFeatures,
-        level + 1,
-        newNode.ZoneId
-      );
-      newNode.feature = node;
-      return newNode;
-    });
-   */
-
     let newNfs = neighborhoodsFeatures;
     // console.log('build tree: level',level,' parentId ',parentId)
     return newNfs.map((node) => {
@@ -120,15 +100,23 @@ export class RegionTreeComponent implements OnInit {
   ngOnInit(): void {
     this.Neighborhoods$.subscribe((neighborhoods) => {
       if (neighborhoods?.features)
-        this._database = new ChecklistDatabase(   neighborhoods.features  );
+        this._database = new ChecklistDatabase(neighborhoods.features);
+      // this.checklistSelection.select(...descendants)
+      // this.checklistSelection.select(  this._database.data )
+
       this.dataSource.data = this._database.data;
+
+      let rootN = this.nestedNodeMap.get(this.dataSource.data[0]);
+      if (rootN) 
+       { this.descendantsAllSelected(rootN);
+      this.todoItemSelectionToggle(rootN)}
     });
 
     this.checklistSelection.changed
       .pipe(
-      //  tap((_) => console.log('checklistSelection.changed ')),
-        debounceTime(1000),
-     //   tap((_) => console.log('checklistSelection.changed after debound'))
+        //  tap((_) => console.log('checklistSelection.changed ')),
+        debounceTime(1000)
+        //   tap((_) => console.log('checklistSelection.changed after debound'))
       )
       .subscribe((rs) => {
         console.log(this.checklistSelection.selected);
@@ -136,44 +124,26 @@ export class RegionTreeComponent implements OnInit {
         let polygons0 = this.checklistSelection.selected
           .map((it) => it.feature)
           .sort((a, b) => b.properties.area - a.properties.area);
-       
-       
-        //   console.log(          'polygons0.slice(0,10)',          polygons0
-        //     .slice(0, 10)
-        //     .map((t) => t.properties.area)
-        //     .join('|')
-        // );
 
+        let polygons: MultiPolygon[] = polygons0.map((it) =>
+          it.geometry.type == 'MultiPolygon'
+            ? it.geometry
+            : turf.multiPolygon([it.geometry.coordinates]).geometry
+        );
 
-        let polygons:MultiPolygon[] = polygons0.map((it) => it.geometry.type=='MultiPolygon'? it.geometry: turf.multiPolygon([it.geometry.coordinates]).geometry);
-
-        let multipolygon: MultiPolygon  =
+        let multipolygon: MultiPolygon =
           polygons.length == 0
-            ? turf.multiPolygon([InitialFilteredViewPolygonCoordinates]).geometry
+            ? turf.multiPolygon([InitialFilteredViewPolygonCoordinates])
+                .geometry
             : polygons[0];
 
-          
-          
-            multipolygon=JSON.parse( JSON.stringify(multipolygon))
-          
-            if (polygons.length >= 2){
-              polygons.forEach(pl => {
-                multipolygon.coordinates.push(pl.coordinates[0])
-                  });
-            }
+        multipolygon = JSON.parse(JSON.stringify(multipolygon));
 
-
-        // if (polygons.length >= 2000)
-        //   multipolygon = polygons
-        //     .slice(0, 100)
-        //     .reduce((a, b) => turf.union(a, b)?.geometry as any);
-        //let dsf=turf.union(polygons[0],polygons[1])
-
-        // console.log(' union : ', multipolygon, turf.area(multipolygon));
-        // if (polygons.length >= 100)
-        //   console.warn(
-        //     'number of polygons more than 100.... others  was ignored'
-        //   );
+        if (polygons.length >= 2) {
+          polygons.forEach((pl) => {
+            multipolygon.coordinates.push(pl.coordinates[0]);
+          });
+        }
 
         this.store.dispatch(
           MapSettingActions.setFilterMultipolygon({ multipolygon })
