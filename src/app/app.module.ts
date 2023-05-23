@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartComponent } from './charts/chart/chart.component';
-import { MainmapComponent } from './mainmap/mainmap.component';
 import { LeafdeckComponent } from './leafdeck/leafdeck.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './Layout/nav/nav.component';
@@ -29,7 +28,6 @@ import { ShowWhatSettingComponent } from './leafdeck/side-views/show-what-settin
     ChartComponent,
     ChartComponent2,
     LeafdeckComponent,
-    MainmapComponent,
     NavComponent,
     DashComponent,
     StickyHeaderComponent,

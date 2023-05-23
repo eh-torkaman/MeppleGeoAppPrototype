@@ -1,3 +1,6 @@
+import * as L from 'leaflet';
+
+import * as Markercluster from 'leaflet.markercluster';
 import {
   AfterViewInit,
   Component,
@@ -9,7 +12,6 @@ import {
 import * as DeckCore from '@deck.gl/core';
 import * as DeckLayers from '@deck.gl/layers';
 import { LeafletLayer } from 'deck.gl-leaflet';
-import * as L from 'leaflet';
 import { Deck } from 'lib';
 import {
   GeoJsonFileNameEnum,
@@ -101,7 +103,10 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: Store,
     private breakpointObserver: BreakpointObserver,
     private ui: UiService
-  ) {}
+  ) {
+
+     console.log(Markercluster)
+  }
   ngOnDestroy(): void {
     this.componentActive = false;
     console.log('*********ngOnDestroy******');
