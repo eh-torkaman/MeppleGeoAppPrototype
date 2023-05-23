@@ -19,8 +19,7 @@ import { selectRoadLineWithConsumptions } from 'src/app/state/map.selectors';
 
 export class TblElectricityComponent implements AfterViewInit {
   displayedColumns: string[] = [ 'name', 'sum_VERBRUIK_KWH', 'avg_VERBRUIK_KWH'];
-   ELEMENT_DATA: RoadLineFeatureProperties[] =[]
-   dataSource!:MatTableDataSource<RoadLineFeatureProperties, MatTableDataSourcePaginator> ;
+   dataSource= new MatTableDataSource<RoadLineFeatureProperties, MatTableDataSourcePaginator> ();
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private store: Store) {
 
@@ -30,12 +29,10 @@ export class TblElectricityComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    if (this.sort)
     this.dataSource.sort = this.sort;
-
     this.roadLineWithConsumptions$.subscribe((ds) => {
       if (!ds) return;
-      let ds2= ds.map(it=>it.properties);
+      let ds2= ds.map(it=>({... it.properties , name:(it.properties.name??'')+ ` (id:${ it.id})` , id:it.id}));
       this.dataSource = new MatTableDataSource(JSON.parse(JSON.stringify(ds2)) )
       this.dataSource.sort = this.sort;
     });
