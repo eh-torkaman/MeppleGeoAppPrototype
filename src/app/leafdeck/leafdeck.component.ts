@@ -337,7 +337,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         this.map.removeLayer(it as any);
       });
     this.LayersNeighborhood = [];
-
+console.log( 'NeighborhoodsCollection',ds.features.length)
     //  ds.features = ds.features.filter((t) => t.properties.PARENT_ZONE == -1);
     let layer = new DeckLayers.GeoJsonLayer({
       id: 'layer_' + GeoJsonFileNameEnum.Neighborhoods,

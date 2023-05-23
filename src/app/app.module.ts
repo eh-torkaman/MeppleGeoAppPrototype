@@ -22,6 +22,7 @@ import { RegionTreeComponent } from './region-tree/region-tree.component';
 import { SideViewsComponent } from './leafdeck/side-views/side-views.component';
 import { ShowWhatSettingComponent } from './leafdeck/side-views/show-what-setting/show-what-setting.component';
 import { TblElectricityComponent } from './views/tbl-electricity/tbl-electricity.component';
+import { TblgasComponent } from './views/tbl-gas/tbl-gas.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TblElectricityComponent } from './views/tbl-electricity/tbl-electricity
     SideViewsComponent,
     ShowWhatSettingComponent,
     TblElectricityComponent,
+    TblgasComponent
   ],
   imports: [
     BrowserModule,

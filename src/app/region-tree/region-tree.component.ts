@@ -104,10 +104,12 @@ export class RegionTreeComponent implements OnInit {
 
       this.dataSource.data = this._database.data;
 
-      let rootN = this.nestedNodeMap.get(this.dataSource.data[0]);
-      if (rootN) 
-       { this.descendantsAllSelected(rootN);
-      this.todoItemSelectionToggle(rootN)}
+      // let rootN = this.nestedNodeMap.get(this.dataSource.data[0]);
+      // if (rootN) 
+      //  { this.descendantsAllSelected(rootN);
+      // this.todoItemSelectionToggle(rootN)}
+
+
     });
 
     this.checklistSelection.changed
@@ -140,7 +142,7 @@ export class RegionTreeComponent implements OnInit {
             multipolygon.coordinates.push(pl.coordinates[0]);
           });
         }
-
+console.log("polygons.length: 0",polygons.length)
         this.store.dispatch(
           MapSettingActions.setFilterMultipolygon({ multipolygon })
         );
