@@ -193,7 +193,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         roadLineInShapeOfPoints,
       ]) => {
         if (visibile_KWH || visibile_M3) this.ui.spin$.next(true);
-
+        
         setTimeout(() => {
           this.calcPointToRaods(
             netload,
@@ -524,7 +524,6 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
 
       return nload;
     });
-
     max_sum_VERBRUIK_KWH = (max_sum_VERBRUIK_KWH ?? 0) + 1;
     max_sum_VERBRUIK_M3 = (max_sum_VERBRUIK_M3 ?? 0) + 1;
     max_sum_VERBRUIK_GJ = (max_sum_VERBRUIK_GJ ?? 0) + 1;
@@ -532,31 +531,31 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     let roadlinesCopy = JSON.parse(
       JSON.stringify(roalines)
     ) as RoadLineFeatureCollection<turf.LineString, RoadLineFeatureProperties>;
-   this.store.dispatch(MapApiActions.updatedRoalinesData({roadLineWithConsumptions:roadlinesCopy}))
     roadlinesCopy.features.forEach((el, idx) => {
       if (!el.id) return;
       let obj = streetsMapNetload.get(el.id);
       if (!obj) return;
       let thisStreetProps = roadlinesCopy.features[idx].properties;
-      thisStreetProps.sum_VERBRUIK_KWH = obj.sum_VERBRUIK_KWH;
-      thisStreetProps.avg_VERBRUIK_KWH = obj.avg_VERBRUIK_KWH;
+      thisStreetProps.sum_VERBRUIK_KWH =Math.round(  obj.sum_VERBRUIK_KWH);
+      thisStreetProps.avg_VERBRUIK_KWH =Math.round(  obj.avg_VERBRUIK_KWH);
 
-      thisStreetProps.sum_VERBRUIK_GJ = obj.sum_VERBRUIK_GJ;
-      thisStreetProps.avg_VERBRUIK_GJ = obj.avg_VERBRUIK_GJ;
+      thisStreetProps.sum_VERBRUIK_GJ =Math.round(  obj.sum_VERBRUIK_GJ);
+      thisStreetProps.avg_VERBRUIK_GJ =Math.round(  obj.avg_VERBRUIK_GJ);
 
-      thisStreetProps.sum_VERBRUIK_M3 = obj.sum_VERBRUIK_M3;
-      thisStreetProps.avg_VERBRUIK_M3 = obj.avg_VERBRUIK_M3;
+      thisStreetProps.sum_VERBRUIK_M3 =Math.round(  obj.sum_VERBRUIK_M3);
+      thisStreetProps.avg_VERBRUIK_M3 =Math.round(  obj.avg_VERBRUIK_M3);
 
       thisStreetProps._color_KWH =
-        (255 * obj.sum_VERBRUIK_KWH) / max_sum_VERBRUIK_KWH;
+      Math.round(  (255 * obj.sum_VERBRUIK_KWH) / max_sum_VERBRUIK_KWH);
 
       thisStreetProps._color_GJ =
-        (255 * obj.sum_VERBRUIK_GJ) / max_sum_VERBRUIK_GJ;
+      Math.round(  (255 * obj.sum_VERBRUIK_GJ) / max_sum_VERBRUIK_GJ);
 
       thisStreetProps._color_M3 =
-        (255 * obj.sum_VERBRUIK_M3) / max_sum_VERBRUIK_M3;
+      Math.round(  (255 * obj.sum_VERBRUIK_M3) / max_sum_VERBRUIK_M3);
     });
 
+    this.store.dispatch(MapApiActions.updatedRoalinesData({roadLineWithConsumptions:roadlinesCopy}))
  
     this.drawRaodLinesByEnergyConsumption(
       roadlinesCopy,
