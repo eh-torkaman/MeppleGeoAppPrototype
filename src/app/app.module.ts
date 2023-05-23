@@ -23,6 +23,7 @@ import { SideViewsComponent } from './leafdeck/side-views/side-views.component';
 import { ShowWhatSettingComponent } from './leafdeck/side-views/show-what-setting/show-what-setting.component';
 import { TblElectricityComponent } from './views/tbl-electricity/tbl-electricity.component';
 import { TblgasComponent } from './views/tbl-gas/tbl-gas.component';
+import { TruncatePipe } from './truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TblgasComponent } from './views/tbl-gas/tbl-gas.component';
     SideViewsComponent,
     ShowWhatSettingComponent,
     TblElectricityComponent,
-    TblgasComponent
+    TblgasComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
