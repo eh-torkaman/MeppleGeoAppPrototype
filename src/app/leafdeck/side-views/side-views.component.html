@@ -17,7 +17,7 @@
 <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
         <mat-panel-title>
-            regions
+           filter data by regions
         </mat-panel-title>
         <mat-panel-description>
             <mat-icon>subtitles</mat-icon>
@@ -64,5 +64,43 @@
     </mat-expansion-panel-header>
 
     <app-chart2></app-chart2>
+
+  </mat-expansion-panel>
+
+
+
+  <mat-expansion-panel>
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        streets gas usage 
+      </mat-panel-title>
+      <mat-panel-description>
+
+        <mat-icon> local_gas_station</mat-icon>
+
+      </mat-panel-description>
+
+
+    </mat-expansion-panel-header>
+    
+    <app-tbl-electricity></app-tbl-electricity>
+
+
+  </mat-expansion-panel>
+
+
+  <mat-expansion-panel>
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        streets electricity usage 
+      </mat-panel-title>
+      <mat-panel-description>
+        <mat-icon>battery_charging_full</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+  <app-tbl-electricity></app-tbl-electricity>
 
   </mat-expansion-panel>

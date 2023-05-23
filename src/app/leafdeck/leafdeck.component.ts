@@ -453,8 +453,6 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (!visible) return;
 
-    console.log('calcPointToRaods');
-    console.log(roadLineInShapeOfPoints, roalines, netLoad);
     let netloadCopy = JSON.parse(
       JSON.stringify(netLoad)
     ) as NetloadImportCollection;
@@ -534,7 +532,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     let roadlinesCopy = JSON.parse(
       JSON.stringify(roalines)
     ) as RoadLineFeatureCollection<turf.LineString, RoadLineFeatureProperties>;
-
+   this.store.dispatch(MapApiActions.updatedRoalinesData({roadLineWithConsumptions:roadlinesCopy}))
     roadlinesCopy.features.forEach((el, idx) => {
       if (!el.id) return;
       let obj = streetsMapNetload.get(el.id);
@@ -559,11 +557,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         (255 * obj.sum_VERBRUIK_M3) / max_sum_VERBRUIK_M3;
     });
 
-    console.log(
-      roadlinesCopy.features.filter((it) => !!it.properties.sum_VERBRUIK_M3),
-      roadlinesCopy.features.filter((it) => !!it.properties.sum_VERBRUIK_KWH)
-    );
-
+ 
     this.drawRaodLinesByEnergyConsumption(
       roadlinesCopy,
       visibile_KWH,

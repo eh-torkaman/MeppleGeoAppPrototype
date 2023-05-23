@@ -39,6 +39,16 @@ export const selectDatasourceDic = createSelector(
   (stateSettings) => stateSettings.datasource
 );
 
+export const selectOtherData = createSelector(
+  selectAppMapSate,
+  (stateSettings) => stateSettings.otherData
+);
+
+export const selectRoadLineWithConsumptions = createSelector(
+  selectOtherData,
+  (stateSettings) => stateSettings.roadLineWithConsumptions
+);
+
 
 export const selectMapSettings = createSelector(
   selectAppMapSate,

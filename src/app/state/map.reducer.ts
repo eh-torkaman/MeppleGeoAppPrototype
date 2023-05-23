@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as L from 'leaflet';
 import * as Geojson from 'geojson';
+import * as turf from '@turf/turf'
 import { MapApiActions, MapSettingActions } from './map.actions';
 import {
   GeoJsonFileNameEnum,
@@ -9,6 +10,7 @@ import {
 import { mapViewStateInterface } from '../geojson.interfaces/_SharedTypes';
 import { InitialFilteredViewPolygonCoordinates } from '../utils/const';
 import * as Immer from 'immer';
+import { RoadLineFeatureCollection, RoadLineFeatureProperties } from '../geojson.interfaces/road_line';
 export interface LayersSetting {
   populationClusterd: boolean;
   roofArea: boolean;
@@ -30,6 +32,9 @@ export interface stateSettingsInterface {
 export interface globalStateInterface {
   datasource: geoJsonDatasourceDicType;
   settings: stateSettingsInterface;
+  otherData:{
+    roadLineWithConsumptions?:RoadLineFeatureCollection<turf.LineString, RoadLineFeatureProperties> ;
+  }
 }
 
 export const initialState: Readonly<globalStateInterface> = {
@@ -37,6 +42,7 @@ export const initialState: Readonly<globalStateInterface> = {
     GeoJsonFileNameEnum | string,
     GeoJSON.FeatureCollection
   >(),
+  otherData: {},
   settings: {
     map: {
       Center: {
@@ -55,11 +61,11 @@ export const initialState: Readonly<globalStateInterface> = {
       roofArea: false,
       buildings: false,
       energyLables: false,
-      cluster_VERBRUIK_KWH:false,
-      cluster_VERBRUIK_M3:false,
+      cluster_VERBRUIK_KWH: false,
+      cluster_VERBRUIK_M3: false,
       roads: false,
       energyConsumptionByStreets_KWH: false,
-      energyConsumptionByStreets_M3:false
+      energyConsumptionByStreets_M3: false,
     },
   },
 };
@@ -82,5 +88,11 @@ export const mapApiReducer = createReducer(
     Immer.produce(_state, (draft) => {
       draft.settings.layers = layersSetting;
     })
-  )
+  ),
+
+  on(MapApiActions.updatedRoalinesData, (_state, { roadLineWithConsumptions }) =>
+  Immer.produce(_state, (draft) => {
+    draft.otherData.roadLineWithConsumptions = roadLineWithConsumptions;
+  })
+)
 );

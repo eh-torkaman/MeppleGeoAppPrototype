@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartComponent } from './charts/chart/chart.component';
+import { ChartComponent } from './views/chart/chart.component';
 import { LeafdeckComponent } from './leafdeck/leafdeck.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './Layout/nav/nav.component';
@@ -15,12 +15,13 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 
 import { mapApiReducer } from './state/map.reducer';
-import { ChartComponent2 } from './charts/chart2/chart.component';
+import { ChartComponent2 } from './views/chart2/chart.component';
 import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { FormsModule } from '@angular/forms';
 import { RegionTreeComponent } from './region-tree/region-tree.component';
 import { SideViewsComponent } from './leafdeck/side-views/side-views.component';
 import { ShowWhatSettingComponent } from './leafdeck/side-views/show-what-setting/show-what-setting.component';
+import { TblElectricityComponent } from './views/tbl-electricity/tbl-electricity.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ShowWhatSettingComponent } from './leafdeck/side-views/show-what-settin
     RegionTreeComponent,
     SideViewsComponent,
     ShowWhatSettingComponent,
+    TblElectricityComponent,
   ],
   imports: [
     BrowserModule,
