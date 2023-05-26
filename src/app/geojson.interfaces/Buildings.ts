@@ -47,7 +47,7 @@ export interface BuildingsFeatureProperties {
   LUXE_UNIT_SIZE_M2?: number[] | number;
   MONUMENTAL: number[] | number;
   NUM_TRUCKS: number[];
-  FUNCTION: Function;
+  FUNCTION: BuildingFunction;
   NAME: string;
   LUXE_CONSTRUCTION_COST_M2?: number[];
   NUM_AIRPLANES: number[];
@@ -224,7 +224,7 @@ export interface BuildingsFeatureProperties {
   AGRICULTURE_PARKING_LOTS_DEMAND_PER_M2?: number[];
 }
 
-export enum Function {
+export enum BuildingFunction {
   Basisschool = 'Basisschool',
   Flats = 'Flats',
   GetransformeerdeKantoren = 'Getransformeerde kantoren',

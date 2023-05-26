@@ -24,6 +24,7 @@ import { ShowWhatSettingComponent } from './leafdeck/side-views/show-what-settin
 import { TblElectricityComponent } from './views/tbl-electricity/tbl-electricity.component';
 import { TblgasComponent } from './views/tbl-gas/tbl-gas.component';
 import { TruncatePipe } from './truncate.pipe';
+import { PiechartComponent } from './views/building-functions/building-functions.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { TruncatePipe } from './truncate.pipe';
     ShowWhatSettingComponent,
     TblElectricityComponent,
     TblgasComponent,
-    TruncatePipe
+    TruncatePipe,
+    PiechartComponent
   ],
   imports: [
     BrowserModule,
