@@ -409,8 +409,36 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     this.LayerEnergy = [];
 let data=addreses.features;
     if (!visible) return;
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx');
  
+    const COLOR_SCALE: DeckCore.RGBAColor[] = [
+      // negative
+      [80, 80, 80],
+      [255, 0, 0],
+      [250, 50, 50],
+      [200, 50, 50],
+
+      // positive
+      [200, 150, 100],
+      [150, 200, 100],
+      [100, 200, 150],
+      [50, 220, 150],
+      [0, 250, 100],
+      [0, 250, 50],
+      [0, 250, 20],
+      [0, 250, 0],
+      [0, 250, 0],
+      [0, 250, 0],
+      [0, 250, 0],
+      [0, 250, 0],
+      [0, 250, 0],
+    ];
+
+    let colorEnergy= (x: any) => {
+      let i = (x==undefined?0:x+1) % COLOR_SCALE.length;
+        return COLOR_SCALE[i]  
+    };
+
+    let energyLblsDes=["UnKnown","G","F","E","D","C","B","A","A+","A++","A+++","A++++","A+++++","A++++++","A+++++++","A++++++++"]
     let enerygyLayer = new DeckLayers.ScatterplotLayer({
       id: 'scatterplot-energylables-layer',
       data: data,
@@ -418,20 +446,30 @@ let data=addreses.features;
       opacity: 0.8,
       stroked: true,
       filled: true,
-      radiusScale: 1,
+      radiusScale: 2,
       radiusMinPixels: 1,
-      radiusMaxPixels: 10,
+      radiusMaxPixels: 20,
       lineWidthMinPixels: 1,
       getPosition: (d) => {
         let a = d as AdressesFeature;
        // let x = [a.geometry.coordinates[0], a.geometry.coordinates[1]] as DeckCore.Position2D;
         return a.geometry.coordinates  as DeckCore.Position2D;
       },
-      // getRadius: (d) => 100, //Math.sqrt(d.exits),
-       getFillColor: (d) => [255, 140, 0],
-       getLineColor: (d) => [0, 0, 0],
+       getRadius: (d) => {
+        let a = d as AdressesFeature;
+       // let x = [a.geometry.coordinates[0], a.geometry.coordinates[1]] as DeckCore.Position2D;
+        return Math.min( Math.max( a.properties.FLOOR_SPACE_M2/300.0,1) ,10)
+      },
+       getFillColor: (d) => {
+        let a = d as AdressesFeature; 
+        return colorEnergy(a.properties.ENERGY_LABEL);
+      },
+       getLineColor: (d) => {
+        let a = d as AdressesFeature; 
+        return colorEnergy(a.properties.ENERGY_LABEL);
+      }
     });
-    let LayerRaodLines = new LeafletLayer({
+    let LayerEnergy = new LeafletLayer({
       views: [
         new DeckCore.MapView({
           repeat: true,
@@ -441,15 +479,15 @@ let data=addreses.features;
       onHover: ({ object }:any) => { 
         let a = object as AdressesFeature;
         if (!a) return;
-        console.log(a,a.properties.ENERGY_LABEL)
       },
       getTooltip:  ({ object }:any) => { 
         let a = object as AdressesFeature;
-        if (!a) return;
-        return { html: '<div class="ENERGY_LABEL_tooltip">'+ a.properties.ENERGY_LABEL + '</div>'};
+        if (!a || !a.properties.ENERGY_LABEL) return ;//{ html:'!'};
+        return { html: `<div class="ENERGY_LABEL_tooltip"> Enery Lbl: ${ energyLblsDes[a.properties.ENERGY_LABEL] } <hr/> Floor area: ${Math.floor( a.properties.FLOOR_SPACE_M2)} </div>`};
       },
     });
-    this.map.addLayer(LayerRaodLines as L.Layer);
+    this.LayerEnergy.push(LayerEnergy)
+    this.map.addLayer(LayerEnergy as L.Layer);
   }
 
   ////// Road lines
