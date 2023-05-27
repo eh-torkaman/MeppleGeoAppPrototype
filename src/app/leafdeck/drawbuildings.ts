@@ -19,7 +19,7 @@ import {
   AdressesCollection,
   AdressesFeatureProperties,
 } from '../geojson.interfaces/Adresses';
-import { BuildingsCollection } from '../geojson.interfaces/Buildings';
+import { BuildingsCollection, BuildingsFeature } from '../geojson.interfaces/Buildings';
 import {
   NeighborhoodsCollection,
   NeighborhoodsFeature,
@@ -77,19 +77,8 @@ export class DrawBuildings {
       filled: true,
       lineWidthMinPixels: 2,
       opacity: 0.15,
-      getLineColor: (f: unknown) => {
-        let r = f as NeighborhoodsFeature<GeoJSON.MultiPolygon>;
-        let c = (1 - r.properties.area / 2220.0) * 255;
-        return RandomColor(0, 50);
-      },
-      getFillColor: (f: unknown) => {
-        let r = f as NeighborhoodsFeature<GeoJSON.MultiPolygon>;
-
-        let c = (r.properties.area / 2220.0) * 255;
-        let cr = 255 - c;
-        //  return ToColor( r.properties.COLOR)
-        return r.properties.COLOR ? ToColor(r.properties.COLOR) : RandomColor(); //[cr,c,cr] as DeckCore.RGBAColor
-      },
+      getLineColor: (f: unknown) => RandomColor(0, 50),
+      getFillColor: (f: unknown) => RandomColor()  
     });
 
     const COLOR_SCALE: DeckCore.RGBAColor[] = [
