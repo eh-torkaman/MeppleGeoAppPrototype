@@ -10,6 +10,7 @@ export class drawClusterRoofArea implements IRemovableLayers {
     this.Draw();
   }
   
+  ///TODO  i have to convert FLOOR_SPACE_M2 in respect with  SLANTING_ROOF_HEIGHT ... sin ... 
 public DestroyClusters(){
     if (this.LayersFloor.length > 0)
     this.LayersFloor.forEach((it: any) => {

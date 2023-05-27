@@ -19,6 +19,7 @@ import {
 } from '../services/geo-jsons.service';
 import {
   AdressesCollection,
+  AdressesFeature,
   AdressesFeatureProperties,
 } from '../geojson.interfaces/Adresses';
 import { BuildingsCollection } from '../geojson.interfaces/Buildings';
@@ -53,7 +54,7 @@ import { mapViewStateInterface } from '../geojson.interfaces/_SharedTypes';
 import { CRS } from 'leaflet';
 import {
   DrawCluster_INHABITANTS,
-    DrawCluster_Netload_KWH,
+  DrawCluster_Netload_KWH,
   DrawCluster_Netload_M3,
   IRemovableLayers,
   drawClusterRoofArea,
@@ -104,8 +105,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private ui: UiService
   ) {
-
-     console.log(Markercluster)
+    console.log(Markercluster);
   }
   ngOnDestroy(): void {
     this.componentActive = false;
@@ -148,7 +148,6 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
       this.drawRoadLines(roadsLines, vis);
     });
 
-
     combineLatest([
       this.Setting$.pipe(
         map((set) => set.cluster_VERBRUIK_KWH),
@@ -159,17 +158,9 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged()
       ),
       this.NetloadImport$,
-    ]).subscribe(
-      ([
-        visibile_KWH,
-        visibile_M3,
-        netload,
-      ])=>{
-        this.initLayerClusterNetload(netload,visibile_KWH,visibile_M3)
-        
-      })
-
-        
+    ]).subscribe(([visibile_KWH, visibile_M3, netload]) => {
+      this.initLayerClusterNetload(netload, visibile_KWH, visibile_M3);
+    });
 
     combineLatest([
       this.Setting$.pipe(
@@ -193,7 +184,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         roadLineInShapeOfPoints,
       ]) => {
         if (visibile_KWH || visibile_M3) this.ui.spin$.next(true);
-        
+
         setTimeout(() => {
           this.calcPointToRaods(
             netload,
@@ -293,17 +284,20 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
   initLayerClusterNetload = (
     ds: undefined | NetloadImportCollection,
     visibile_KWH: boolean,
-    visibile_M3:boolean
+    visibile_M3: boolean
   ) => {
     if (!ds) return;
 
     this.removableLayersInitNetload.forEach((el) => el.DestroyClusters());
     if (visibile_KWH)
-      this.removableLayersInitNetload.push(new DrawCluster_Netload_KWH(ds, this.map));
+      this.removableLayersInitNetload.push(
+        new DrawCluster_Netload_KWH(ds, this.map)
+      );
 
-      if (visibile_M3)
-      this.removableLayersInitNetload.push(new DrawCluster_Netload_M3 (ds, this.map));
-    
+    if (visibile_M3)
+      this.removableLayersInitNetload.push(
+        new DrawCluster_Netload_M3(ds, this.map)
+      );
   };
 
   removableLayersInitAddress: IRemovableLayers[] = [];
@@ -316,9 +310,15 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.removableLayersInitAddress.forEach((el) => el.DestroyClusters());
     if (setting.populationClusterd)
-      this.removableLayersInitAddress.push(new DrawCluster_INHABITANTS(ds, this.map));
+      this.removableLayersInitAddress.push(
+        new DrawCluster_INHABITANTS(ds, this.map)
+      );
     if (setting.roofArea)
-      this.removableLayersInitAddress.push(new drawClusterRoofArea(ds, this.map));
+      this.removableLayersInitAddress.push(
+        new drawClusterRoofArea(ds, this.map)
+      );
+
+    this.DrawEnergyLabels(ds, setting.energyLables);
   };
   toggleClicked(tt: any) {
     setTimeout(() => {
@@ -337,7 +337,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         this.map.removeLayer(it as any);
       });
     this.LayersNeighborhood = [];
-console.log( 'NeighborhoodsCollection',ds.features.length)
+    console.log('NeighborhoodsCollection', ds.features.length);
     //  ds.features = ds.features.filter((t) => t.properties.PARENT_ZONE == -1);
     let layer = new DeckLayers.GeoJsonLayer({
       id: 'layer_' + GeoJsonFileNameEnum.Neighborhoods,
@@ -388,8 +388,6 @@ console.log( 'NeighborhoodsCollection',ds.features.length)
       return COLOR_SCALE[i] || COLOR_SCALE[COLOR_SCALE.length - 1];
     };
 
-   
-
     const deckLayer = new LeafletLayer({
       views: [
         new DeckCore.MapView({
@@ -403,12 +401,55 @@ console.log( 'NeighborhoodsCollection',ds.features.length)
   };
 
   LayerEnergy: any[] = [];
-  DrawEnergyLabels(addreses: AdressesCollection) {
+  DrawEnergyLabels(addreses: AdressesCollection, visible: boolean) {
     if (this.LayerEnergy.length > 0)
       this.LayerEnergy.forEach((it: any) => {
         this.map.removeLayer(it as any);
       });
     this.LayerEnergy = [];
+let data=addreses.features;
+    if (!visible) return;
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx');
+ 
+    let enerygyLayer = new DeckLayers.ScatterplotLayer({
+      id: 'scatterplot-energylables-layer',
+      data: data,
+      pickable: true,
+      opacity: 0.8,
+      stroked: true,
+      filled: true,
+      radiusScale: 1,
+      radiusMinPixels: 1,
+      radiusMaxPixels: 10,
+      lineWidthMinPixels: 1,
+      getPosition: (d) => {
+        let a = d as AdressesFeature;
+       // let x = [a.geometry.coordinates[0], a.geometry.coordinates[1]] as DeckCore.Position2D;
+        return a.geometry.coordinates  as DeckCore.Position2D;
+      },
+      // getRadius: (d) => 100, //Math.sqrt(d.exits),
+       getFillColor: (d) => [255, 140, 0],
+       getLineColor: (d) => [0, 0, 0],
+    });
+    let LayerRaodLines = new LeafletLayer({
+      views: [
+        new DeckCore.MapView({
+          repeat: true,
+        }),
+      ],
+      layers: [enerygyLayer],
+      onHover: ({ object }:any) => { 
+        let a = object as AdressesFeature;
+        if (!a) return;
+        console.log(a,a.properties.ENERGY_LABEL)
+      },
+      getTooltip:  ({ object }:any) => { 
+        let a = object as AdressesFeature;
+        if (!a) return;
+        return { html: '<div class="ENERGY_LABEL_tooltip">'+ a.properties.ENERGY_LABEL + '</div>'};
+      },
+    });
+    this.map.addLayer(LayerRaodLines as L.Layer);
   }
 
   ////// Road lines
@@ -536,27 +577,34 @@ console.log( 'NeighborhoodsCollection',ds.features.length)
       let obj = streetsMapNetload.get(el.id);
       if (!obj) return;
       let thisStreetProps = roadlinesCopy.features[idx].properties;
-      thisStreetProps.sum_VERBRUIK_KWH =Math.round(  obj.sum_VERBRUIK_KWH);
-      thisStreetProps.avg_VERBRUIK_KWH =Math.round(  obj.avg_VERBRUIK_KWH);
+      thisStreetProps.sum_VERBRUIK_KWH = Math.round(obj.sum_VERBRUIK_KWH);
+      thisStreetProps.avg_VERBRUIK_KWH = Math.round(obj.avg_VERBRUIK_KWH);
 
-      thisStreetProps.sum_VERBRUIK_GJ =Math.round(  obj.sum_VERBRUIK_GJ);
-      thisStreetProps.avg_VERBRUIK_GJ =Math.round(  obj.avg_VERBRUIK_GJ);
+      thisStreetProps.sum_VERBRUIK_GJ = Math.round(obj.sum_VERBRUIK_GJ);
+      thisStreetProps.avg_VERBRUIK_GJ = Math.round(obj.avg_VERBRUIK_GJ);
 
-      thisStreetProps.sum_VERBRUIK_M3 =Math.round(  obj.sum_VERBRUIK_M3);
-      thisStreetProps.avg_VERBRUIK_M3 =Math.round(  obj.avg_VERBRUIK_M3);
+      thisStreetProps.sum_VERBRUIK_M3 = Math.round(obj.sum_VERBRUIK_M3);
+      thisStreetProps.avg_VERBRUIK_M3 = Math.round(obj.avg_VERBRUIK_M3);
 
-      thisStreetProps._color_KWH =
-      Math.round(  (255 * obj.sum_VERBRUIK_KWH) / max_sum_VERBRUIK_KWH);
+      thisStreetProps._color_KWH = Math.round(
+        (255 * obj.sum_VERBRUIK_KWH) / max_sum_VERBRUIK_KWH
+      );
 
-      thisStreetProps._color_GJ =
-      Math.round(  (255 * obj.sum_VERBRUIK_GJ) / max_sum_VERBRUIK_GJ);
+      thisStreetProps._color_GJ = Math.round(
+        (255 * obj.sum_VERBRUIK_GJ) / max_sum_VERBRUIK_GJ
+      );
 
-      thisStreetProps._color_M3 =
-      Math.round(  (255 * obj.sum_VERBRUIK_M3) / max_sum_VERBRUIK_M3);
+      thisStreetProps._color_M3 = Math.round(
+        (255 * obj.sum_VERBRUIK_M3) / max_sum_VERBRUIK_M3
+      );
     });
 
-    this.store.dispatch(MapApiActions.updatedRoalinesData({roadLineWithConsumptions:roadlinesCopy}))
- 
+    this.store.dispatch(
+      MapApiActions.updatedRoalinesData({
+        roadLineWithConsumptions: roadlinesCopy,
+      })
+    );
+
     this.drawRaodLinesByEnergyConsumption(
       roadlinesCopy,
       visibile_KWH,
