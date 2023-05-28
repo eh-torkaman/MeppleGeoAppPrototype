@@ -111,7 +111,7 @@ export class GeoJsonsService {
               //@ts-ignore
               Neighborhoods.features = Neighborhoods.features.sort( (a, b) => b.properties.area - a.properties.area );
             } catch (ee) {
-              console.log(ee);
+              console.warn(ee);
             }
             this.setDataInDic(GeoJsonFileNameEnum.Neighborhoods, Neighborhoods);
 

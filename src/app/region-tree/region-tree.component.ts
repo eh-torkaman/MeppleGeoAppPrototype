@@ -59,11 +59,11 @@ class ChecklistDatabase {
       InitialFilteredViewPolygonCoordinates
     ) as NTree;
 
-    //console.log(rootNode.feature);
+    
     rootNode.children = this.buildTree(treeData, 0, rootNode.ZoneId);
-    // Notify the change.
+     
     this.dataChange.next([rootNode]);
-    //console.log('rootNoderootNoderootNoderootNode', rootNode);
+    
   }
 
   buildTree(
@@ -72,7 +72,7 @@ class ChecklistDatabase {
     parentId: number
   ): RegionNode[] | undefined {
     let newNfs = neighborhoodsFeatures;
-    // console.log('build tree: level',level,' parentId ',parentId)
+    
     return newNfs.map((node) => {
       let newNode = new RegionNode();
       newNode.ZoneId = node.properties.ID;
@@ -117,8 +117,7 @@ export class RegionTreeComponent implements OnInit {
         debounceTime(1000)
       )
       .subscribe((rs) => {
-        console.log(this.checklistSelection.selected);
-
+   
         let polygons0 = this.checklistSelection.selected
           .map((it) => it.feature)
           .sort((a, b) => b.properties.area - a.properties.area);
@@ -142,7 +141,7 @@ export class RegionTreeComponent implements OnInit {
             multipolygon.coordinates.push(pl.coordinates[0]);
           });
         }
-console.log("polygons.length: 0",polygons.length)
+
         this.store.dispatch(
           MapSettingActions.setFilterMultipolygon({ multipolygon })
         );

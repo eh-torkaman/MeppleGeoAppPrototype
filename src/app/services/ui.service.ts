@@ -52,14 +52,14 @@ export class UiService {
     }
 
     private showSpinner(){
-      console.log("attach")
+      
      let cref= this.spinnerTopRef.attach(new ComponentPortal(MatProgressSpinner));
      cref.setInput('mode','indeterminate')
      cref.setInput('color','warn')
     }
 
     private stopSpinner(){
-      console.log("dispose")
+     
       this.spinnerTopRef.detach() ;
     }
    

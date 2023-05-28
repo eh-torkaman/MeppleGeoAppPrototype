@@ -1,6 +1,6 @@
-<mat-drawer-container class="example-container" [hasBackdrop]="false">
+<mat-drawer-container class="example-container"  [hasBackdrop]="false">
 
-  <mat-drawer #drawer mode="side" opened="true" position="start">
+  <mat-drawer class="reactToBreakpoint" #drawer mode="side" position="start">
 
     <app-side-views></app-side-views>
 
@@ -24,8 +24,11 @@
   <mat-drawer-content>
     <div #map class="map"></div>
 
-    <button mat-raised-button (click)="toggleClicked(drawer.toggle())">Toggle drawer</button>
-
+    
+    <button  class="reactToBreakpoint btnDrawer"   (click)="toggleClicked(drawer.toggle())">
+      <mat-icon *ngIf="!drawer.opened">chevron_right</mat-icon>
+      <mat-icon *ngIf="drawer.opened">chevron_left</mat-icon>
+    </button>
   </mat-drawer-content>
 
 

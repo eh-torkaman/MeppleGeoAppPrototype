@@ -117,7 +117,7 @@ export function ToColor(num: number) {
       a = ((num & 0xff000000) >>> 24) / 255; // [r, g, b , a]
     return [r, g, b] as DeckCore.RGBAColor;
   } catch {
-    console.log('number is not in correct format to be converted to color');
+    console.warn('number is not in correct format to be converted to color');
     return RandomColor();
   }
 }

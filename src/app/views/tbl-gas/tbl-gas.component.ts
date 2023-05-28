@@ -39,7 +39,7 @@ export class TblgasComponent implements AfterViewInit {
   }
 
   announceSortChange(sortState: Sort) {
-    console.log("dsfdsf",sortState)
+    
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {

@@ -1,6 +1,31 @@
+@media screen and (max-width: 1400px) {
+   .reactToBreakpoint.btnDrawer{
+        display: none;
+    }
+      
+//:host ::ng-deep{    mat-drawer.reactToBreakpoint{  display: none;    }}
+  }
+
+  @media screen and (min-width: 1400px) {
+  .reactToBreakpoint.btnDrawer{
+        position: absolute;
+        top:0px;
+        left: 0px;
+        z-index: 10000;
+        background-color: #424242;
+        color: white;
+        border: none;
+    }
+.btnDrawer:hover{
+    color: yellow;
+}
+
+  }
+
+
 .map {
     min-height: 500px;
-    height:  calc(100vh - 150px);
+    height:  calc(100vh - 100px);
     margin: 1px 2px;
 }
 

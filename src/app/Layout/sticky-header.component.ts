@@ -98,7 +98,7 @@ export class StickyHeaderComponent implements AfterViewInit {
       throttleTime(50),
       map(() => elem.nativeElement.scrollTop),
       pairwise(),
-      tap(rs=>console.log(rs)),
+     // tap(rs=>console.log(rs)),
       map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : (y2 > y1? Direction.Down:Direction.Still))),
       distinctUntilChanged(),
       share()

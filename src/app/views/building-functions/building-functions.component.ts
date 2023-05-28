@@ -89,9 +89,7 @@ export class PiechartComponent implements OnInit, AfterViewInit {
     ],
   };
   ngOnInit(): void {
-    let c: BuildingFunction;
-    c = BuildingFunction.Basisschool;
-    console.log('BuildingFunction', c);
+     
     this.Buildings$.subscribe((rs) => {
       if (!rs) return;
       this.legends=[];
@@ -127,7 +125,7 @@ export class PiechartComponent implements OnInit, AfterViewInit {
         }
       });
       tmpData2.sort((a, b) => a.value - b.value);
-      console.log(tmpData2)
+      
       tmpData2.forEach((it, ix) => {
         if (!it.name.toLocaleLowerCase().startsWith(otherKey))
         this.legends.push(it.name);
