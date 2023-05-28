@@ -45,10 +45,13 @@ import {
   combineLatest,
   distinct,
   distinctUntilChanged,
+  fromEvent,
+  throttleTime,
+  startWith,
 } from 'rxjs';
 import { MatAccordion } from '@angular/material/expansion';
 import { ThemePalette } from '@angular/material/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints, MediaMatcher } from '@angular/cdk/layout';
 import { BreakpointState } from '@angular/cdk/layout';
 import { mapViewStateInterface } from '../geojson.interfaces/_SharedTypes';
 import { CRS } from 'leaflet';
@@ -73,6 +76,7 @@ import {
 } from '../geojson.interfaces/NetloadImport';
 import { MapApiActions } from '../state/map.actions';
 import { UiService } from '../services/ui.service';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-leafdeck2',
@@ -80,14 +84,9 @@ import { UiService } from '../services/ui.service';
   styleUrls: ['./leafdeck.component.scss'],
 })
 export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
-  isHandset$: Observable<BreakpointState> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(shareReplay());
-  /************ */
-
-  /************ */
 
   state!: mapViewStateInterface;
+  @ViewChild ("drawer")   matDrawer!:MatDrawer;
   SetMapState(s: mapViewStateInterface = this.state) {
     // this.map.flyTo(s.Center, s.Zoom);
     this.map.setView(s.Center, s.Zoom);
@@ -103,22 +102,40 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private store: Store,
     private breakpointObserver: BreakpointObserver,
-    private ui: UiService
+    private ui: UiService,
+    private mediaMatcher: MediaMatcher
   ) {
+    // do not remove this line :-))
     console.log(Markercluster);
+    
   }
   ngOnDestroy(): void {
     this.componentActive = false;
     console.log('*********ngOnDestroy******');
   }
   ngAfterViewInit(): void {
-    this.isHandset$.subscribe((rs) => console.log('this.isHandset$.subsc', rs));
+  
+    this.breakpointObserver.observe('(max-width: 1400px)').pipe(map(rs=>rs.matches),
+   // startWith(this.mediaMatcher.matchMedia('(max-width: 1400px)').matches)
+    ).pipe(debounceTime(0)).subscribe(
+      rs=>{
+        if (rs){
+          this.matDrawer.close();
+          
+        }
+        else{
+          this.matDrawer.open();
+        }
+
+
+        setTimeout(() => {
+          this.map.invalidateSize();
+        }, 250);
+      }
+    )
     this.initMap();
     //
-    this.Neighborhoods$ .subscribe((rs) => {
-      this.initLayerNeighborhood(rs);
-      console.log(rs);
-    });
+    this.Neighborhoods$.subscribe((rs) => this.initLayerNeighborhood(rs));
 
     let buildingDrawer = new DrawBuildings(this.map);
     combineLatest([
@@ -127,11 +144,10 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged()
       ),
       this.Buildings$,
-    ])
-      .subscribe(([visbuild, buildings]) => {
-        if (visbuild) buildingDrawer.Draw(buildings);
-        else buildingDrawer.Clear();
-      });
+    ]).subscribe(([visbuild, buildings]) => {
+      if (visbuild) buildingDrawer.Draw(buildings);
+      else buildingDrawer.Clear();
+    });
 
     combineLatest([this.Setting$, this.Adresses$])
       .pipe(debounceTime(50))
@@ -145,10 +161,9 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged()
       ),
       this.RoadLine$,
-    ])
-      .subscribe(([vis, roadsLines]) => {
-        this.drawRoadLines(roadsLines, vis);
-      });
+    ]).subscribe(([vis, roadsLines]) => {
+      this.drawRoadLines(roadsLines, vis);
+    });
 
     combineLatest([
       this.Setting$.pipe(
@@ -252,7 +267,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
 
   componentActive = true;
   ngOnInit(): void {
-    console.log('ngOninit');
+    
   }
   startLatLng: L.LatLngLiteral = {
     lat: 52.68340048498056,
@@ -270,13 +285,13 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     }).setView(_startLatLng, 15);
 
     function onMapClick(e: any) {
-      console.log('click ', e.latlng, e);
+     
     }
 
     //  this.map.on('click', onMapClick);
 
     this.map.on('zoomend', (e: any) => {
-      //console.log('zoom ', e.sourceTarget?._zoom, e);
+    
     });
 
     const tiles = L.tileLayer(TitleUrls[0], {
