@@ -1,10 +1,18 @@
 <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport role='dialog' mode="over" opened=false>
+    <mat-toolbar>Menu</mat-toolbar>
+    <app-side-views></app-side-views>
+  </mat-sidenav>
+
   <mat-sidenav-content #sidenavContent>
     <mat-toolbar color="primary">
 
-      <span>GeoApp TAUW TEAM</span>
+      <button mat-icon-button color="accent" class="reactToBreakpoint btnDrawer" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button> <span>GeoApp TAUW TEAM</span>
 
     </mat-toolbar>
+
 
     <router-outlet></router-outlet>
 

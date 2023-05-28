@@ -1,4 +1,4 @@
-<p>after ckecking Sum of Energy Consumption in setting the table will be populated</p>
+<p *ngIf="noData">after ckecking Sum of Energy Consumption in the setting this table will be populated</p>
 <table   mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
        class="mat-elevation-z8">
 

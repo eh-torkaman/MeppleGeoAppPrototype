@@ -12,5 +12,3 @@ in angular.json and added manually
 
  ng build --base-href "https://eh-torkaman.github.io/MeppleGeoAppPrototype/"
 
-rename pathes ./assets to ./testMeppleProfile/assets
-ient.get(`/assets/geojson/${i}.geojson`

@@ -111,7 +111,6 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.componentActive = false;
-    console.log('*********ngOnDestroy******');
   }
   ngAfterViewInit(): void {
   

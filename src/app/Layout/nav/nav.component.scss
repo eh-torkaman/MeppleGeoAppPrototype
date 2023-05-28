@@ -3,7 +3,7 @@
 }
 
 .sidenav {
-  width: 200px;
+  width: 90%;
 }
 
 .sidenav .mat-toolbar {
@@ -15,3 +15,12 @@
   top: 0;
   z-index: 1;
 }
+
+
+@media screen and (min-width: 1400px) {
+  .reactToBreakpoint.btnDrawer{
+       display: none;
+   }
+     
+//:host ::ng-deep{    mat-drawer.reactToBreakpoint{  display: none;    }}
+ }

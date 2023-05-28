@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -14,7 +15,11 @@ import * as echarts from 'echarts';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent2 implements OnInit, AfterViewInit {
+export class ChartComponent2 implements OnInit, AfterViewInit , OnDestroy {
+  componentActive=true;
+  ngOnDestroy(): void {
+    this.componentActive = false;
+  }
   @ViewChild('map') map!: ElementRef<HTMLInputElement>;
   constructor(private httpClient: HttpClient) {}
   ngOnInit(): void {

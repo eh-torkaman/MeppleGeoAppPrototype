@@ -3,12 +3,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as echarts from 'echarts';
-import { debounceTime, filter, tap } from 'rxjs';
+import { debounceTime, filter, takeWhile, tap } from 'rxjs';
 
 import * as mapSelectors from '../../state/map.selectors';
 @Component({
@@ -16,7 +17,11 @@ import * as mapSelectors from '../../state/map.selectors';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit, AfterViewInit {
+export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
+  componentActive=true;
+  ngOnDestroy(): void {
+    this.componentActive = false;
+  }
   @ViewChild('map') map!: ElementRef<HTMLInputElement>;
   constructor( private store: Store) {}
   
@@ -46,7 +51,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    this.Adresses$.subscribe(rs=>{
+    this.Adresses$.pipe(takeWhile(_=>this.componentActive)).subscribe(rs=>{
 
     }
 

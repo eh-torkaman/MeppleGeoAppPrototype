@@ -36,9 +36,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
+
+
+import { LayoutModule } from '@angular/cdk/layout';
+
 @NgModule({
   imports: [
     CommonModule,
+    LayoutModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
     MatCheckboxModule,
@@ -77,6 +82,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     OverlayModule,
   ],
   exports: [
+    LayoutModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
     MatCheckboxModule,
