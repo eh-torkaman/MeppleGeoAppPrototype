@@ -1,4 +1,12 @@
-:host ::ng-deep
- mat-panel-description{
-    flex-flow: row-reverse;
+:host ::ng-deep {
+
+
+    mat-panel-description {
+        flex-flow: row-reverse;
+    }
+
+    .mat-expansion-panel-header-title, .mat-expansion-panel-header-description{
+        flex-grow: 1;
+    }
+
 }

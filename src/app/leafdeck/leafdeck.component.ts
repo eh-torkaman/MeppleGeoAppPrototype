@@ -218,7 +218,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
   );
   Neighborhoods$ = this.store.select(mapSelectors.selectNeighborhoods).pipe(
     // tap((rs) => console.log('Neighborhoods length', rs?.features.length)),
-    debounceTime(180),
+    debounceTime(90),
     filter((it) => !!it)
   );
   NetloadImport$ = this.store.select(mapSelectors.selectNetloadImport).pipe(
@@ -261,7 +261,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
       renderer: L.canvas(),
       maxZoom: 25,
       minZoom: 5,
-    }).setView(_startLatLng, 18);
+    }).setView(_startLatLng, 15);
 
     function onMapClick(e: any) {
       console.log('click ', e.latlng, e);

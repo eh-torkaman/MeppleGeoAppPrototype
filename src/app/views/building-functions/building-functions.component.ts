@@ -115,7 +115,6 @@ export class PiechartComponent implements OnInit, AfterViewInit {
       let tmpData2: { value: number; name: string }[] = [];
       tmpData.forEach((it, ix) => {
         if (it.value / sumT < 0.01) {
-          console.log(it.name)
           let othersIt = tmpData2.find((it) =>
             it.name.toLocaleLowerCase().startsWith(otherKey)
           );
