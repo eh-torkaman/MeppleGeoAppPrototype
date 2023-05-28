@@ -115,7 +115,7 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isHandset$.subscribe((rs) => console.log('this.isHandset$.subsc', rs));
     this.initMap();
     //
-    this.Neighborhoods$.subscribe((rs) => {
+    this.Neighborhoods$ .subscribe((rs) => {
       this.initLayerNeighborhood(rs);
       console.log(rs);
     });
@@ -127,16 +127,17 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged()
       ),
       this.Buildings$,
-    ]).subscribe(([visbuild, buildings]) => {
-      if (visbuild) buildingDrawer.Draw(buildings);
-      else buildingDrawer.Clear();
-    });
+    ])
+      .subscribe(([visbuild, buildings]) => {
+        if (visbuild) buildingDrawer.Draw(buildings);
+        else buildingDrawer.Clear();
+      });
 
-    combineLatest([this.Setting$, this.Adresses$]).subscribe(
-      ([setting, addreses]) => {
+    combineLatest([this.Setting$, this.Adresses$])
+      .pipe(debounceTime(50))
+      .subscribe(([setting, addreses]) => {
         this.initLayerAddreses(addreses, setting);
-      }
-    );
+      });
 
     combineLatest([
       this.Setting$.pipe(
@@ -144,9 +145,10 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged()
       ),
       this.RoadLine$,
-    ]).subscribe(([vis, roadsLines]) => {
-      this.drawRoadLines(roadsLines, vis);
-    });
+    ])
+      .subscribe(([vis, roadsLines]) => {
+        this.drawRoadLines(roadsLines, vis);
+      });
 
     combineLatest([
       this.Setting$.pipe(
@@ -158,9 +160,11 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         distinctUntilChanged()
       ),
       this.NetloadImport$,
-    ]).subscribe(([visibile_KWH, visibile_M3, netload]) => {
-      this.initLayerClusterNetload(netload, visibile_KWH, visibile_M3);
-    });
+    ])
+      .pipe(debounceTime(100))
+      .subscribe(([visibile_KWH, visibile_M3, netload]) => {
+        this.initLayerClusterNetload(netload, visibile_KWH, visibile_M3);
+      });
 
     combineLatest([
       this.Setting$.pipe(
@@ -175,28 +179,30 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
       this.RoadLine$,
       this.NetloadImport$,
       this.RoadLineInShapeOfPoints$,
-    ]).subscribe(
-      ([
-        visibile_KWH,
-        visibile_M3,
-        roadsLines,
-        netload,
-        roadLineInShapeOfPoints,
-      ]) => {
-        if (visibile_KWH || visibile_M3) this.ui.spin$.next(true);
+    ])
+      .pipe(debounceTime(100))
+      .subscribe(
+        ([
+          visibile_KWH,
+          visibile_M3,
+          roadsLines,
+          netload,
+          roadLineInShapeOfPoints,
+        ]) => {
+          if (visibile_KWH || visibile_M3) this.ui.spin$.next(true);
 
-        setTimeout(() => {
-          this.calcPointToRaods(
-            netload,
-            roadLineInShapeOfPoints,
-            roadsLines,
-            visibile_KWH,
-            visibile_M3
-          );
-          if (visibile_KWH || visibile_M3) this.ui.spin$.next(false);
-        }, 200);
-      }
-    );
+          setTimeout(() => {
+            this.calcPointToRaods(
+              netload,
+              roadLineInShapeOfPoints,
+              roadsLines,
+              visibile_KWH,
+              visibile_M3
+            );
+            if (visibile_KWH || visibile_M3) this.ui.spin$.next(false);
+          }, 200);
+        }
+      );
   }
   @ViewChild('map', { read: ElementRef })
   mapElemRef!: ElementRef<HTMLDivElement>;
@@ -206,42 +212,42 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
   private map!: L.Map;
   Setting$ = this.store.select(mapSelectors.selectLayersSetting).pipe(
     filter((it) => !!it),
-    debounceTime(85)
+    debounceTime(0)
   );
   Adresses$ = this.store.select(mapSelectors.selectAdresses).pipe(
     filter((it) => !!it),
-    debounceTime(100)
+    debounceTime(0)
   );
   Buildings$ = this.store.select(mapSelectors.selectBuildings).pipe(
     filter((it) => !!it),
-    debounceTime(150)
+    debounceTime(0)
   );
   Neighborhoods$ = this.store.select(mapSelectors.selectNeighborhoods).pipe(
     // tap((rs) => console.log('Neighborhoods length', rs?.features.length)),
-    debounceTime(90),
+    debounceTime(0),
     filter((it) => !!it)
   );
   NetloadImport$ = this.store.select(mapSelectors.selectNetloadImport).pipe(
     filter((it) => !!it),
-    debounceTime(95)
+    debounceTime(0)
   );
   TygronSectionGeometry$ = this.store
     .select(mapSelectors.selectTygronSectionGeometry)
     .pipe(
       filter((it) => !!it),
-      debounceTime(235)
+      debounceTime(0)
     );
 
   RoadLine$ = this.store.select(mapSelectors.selectRoadLine).pipe(
     filter((it) => !!it),
-    debounceTime(310)
+    debounceTime(0)
   );
 
   RoadLineInShapeOfPoints$ = this.store
     .select(mapSelectors.selectRoadLineInShapeOfPoints)
     .pipe(
       filter((it) => !!it),
-      debounceTime(310)
+      debounceTime(0)
     );
 
   componentActive = true;
@@ -407,9 +413,9 @@ export class LeafdeckComponent implements OnInit, AfterViewInit, OnDestroy {
         this.map.removeLayer(it as any);
       });
     this.LayerEnergy = [];
-let data=addreses.features;
+    let data = addreses.features;
     if (!visible) return;
- 
+
     const COLOR_SCALE: DeckCore.RGBAColor[] = [
       // negative
       [80, 80, 80],
@@ -433,12 +439,29 @@ let data=addreses.features;
       [0, 250, 0],
     ];
 
-    let colorEnergy= (x: any) => {
-      let i = (x==undefined?0:x+1) % COLOR_SCALE.length;
-        return COLOR_SCALE[i]  
+    let colorEnergy = (x: any) => {
+      let i = (x == undefined ? 0 : x + 1) % COLOR_SCALE.length;
+      return COLOR_SCALE[i];
     };
 
-    let energyLblsDes=["UnKnown","G","F","E","D","C","B","A","A+","A++","A+++","A++++","A+++++","A++++++","A+++++++","A++++++++"]
+    let energyLblsDes = [
+      'UnKnown',
+      'G',
+      'F',
+      'E',
+      'D',
+      'C',
+      'B',
+      'A',
+      'A+',
+      'A++',
+      'A+++',
+      'A++++',
+      'A+++++',
+      'A++++++',
+      'A+++++++',
+      'A++++++++',
+    ];
     let enerygyLayer = new DeckLayers.ScatterplotLayer({
       id: 'scatterplot-energylables-layer',
       data: data,
@@ -452,22 +475,22 @@ let data=addreses.features;
       lineWidthMinPixels: 1,
       getPosition: (d) => {
         let a = d as AdressesFeature;
-       // let x = [a.geometry.coordinates[0], a.geometry.coordinates[1]] as DeckCore.Position2D;
-        return a.geometry.coordinates  as DeckCore.Position2D;
+        // let x = [a.geometry.coordinates[0], a.geometry.coordinates[1]] as DeckCore.Position2D;
+        return a.geometry.coordinates as DeckCore.Position2D;
       },
-       getRadius: (d) => {
+      getRadius: (d) => {
         let a = d as AdressesFeature;
-       // let x = [a.geometry.coordinates[0], a.geometry.coordinates[1]] as DeckCore.Position2D;
-        return Math.min( Math.max( a.properties.FLOOR_SPACE_M2/300.0,1) ,10)
+        // let x = [a.geometry.coordinates[0], a.geometry.coordinates[1]] as DeckCore.Position2D;
+        return Math.min(Math.max(a.properties.FLOOR_SPACE_M2 / 300.0, 1), 10);
       },
-       getFillColor: (d) => {
-        let a = d as AdressesFeature; 
+      getFillColor: (d) => {
+        let a = d as AdressesFeature;
         return colorEnergy(a.properties.ENERGY_LABEL);
       },
-       getLineColor: (d) => {
-        let a = d as AdressesFeature; 
+      getLineColor: (d) => {
+        let a = d as AdressesFeature;
         return colorEnergy(a.properties.ENERGY_LABEL);
-      }
+      },
     });
     let LayerEnergy = new LeafletLayer({
       views: [
@@ -476,17 +499,23 @@ let data=addreses.features;
         }),
       ],
       layers: [enerygyLayer],
-      onHover: ({ object }:any) => { 
+      onHover: ({ object }: any) => {
         let a = object as AdressesFeature;
         if (!a) return;
       },
-      getTooltip:  ({ object }:any) => { 
+      getTooltip: ({ object }: any) => {
         let a = object as AdressesFeature;
-        if (!a || !a.properties.ENERGY_LABEL) return ;//{ html:'!'};
-        return { html: `<div class="ENERGY_LABEL_tooltip"> Enery Lbl: ${ energyLblsDes[a.properties.ENERGY_LABEL] } <hr/> Floor area: ${Math.floor( a.properties.FLOOR_SPACE_M2)} </div>`};
+        if (!a || !a.properties.ENERGY_LABEL) return; //{ html:'!'};
+        return {
+          html: `<div class="ENERGY_LABEL_tooltip"> Enery Lbl: ${
+            energyLblsDes[a.properties.ENERGY_LABEL]
+          } <hr/> Floor area: ${Math.floor(
+            a.properties.FLOOR_SPACE_M2
+          )} </div>`,
+        };
       },
     });
-    this.LayerEnergy.push(LayerEnergy)
+    this.LayerEnergy.push(LayerEnergy);
     this.map.addLayer(LayerEnergy as L.Layer);
   }
 

@@ -56,7 +56,7 @@ export const initialState: Readonly<globalStateInterface> = {
       coordinates: InitialFilteredViewPolygonCoordinates,
     },
     layers: {
-      populationClusterd: true,
+      populationClusterd: false,
       floorArea: false,
       roofArea: false,
       buildings: true,
