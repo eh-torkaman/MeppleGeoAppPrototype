@@ -28,7 +28,15 @@
     height:  calc(100vh - 120px);
     margin: 1px 2px;
 }
+@media screen and (max-width:500px) {
 
+    .map {
+        min-height: 300px;
+        height:  calc(100vh - 130px);
+        margin: 1px 2px;
+    }
+
+   }
  
   mat-drawer-content {
     padding: 12px;

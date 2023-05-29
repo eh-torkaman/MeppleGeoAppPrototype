@@ -72,4 +72,10 @@
     6px 6px 0px #90B1E0;
   }
 
+  @media screen and (max-width:500px) {
+    .logoTextClass {
+      font-size: 0.8rem;
+     
+    }}
+
 }
