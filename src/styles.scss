@@ -40,7 +40,7 @@ $GeoAppTest-theme: mat.define-light-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-legacy-component-themes($GeoAppTest-theme);
+//@include mat.all-legacy-component-themes($GeoAppTest-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -67,4 +67,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .ENERGY_LABEL_tooltip{
   color: white;
+}
+
+.mat-tree, .mat-expansion-panel, .mat-drawer , .mat-drawer-container , body{
+  background-color:  #11032047 !important;
 }

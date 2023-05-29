@@ -1,160 +1,169 @@
 @media screen and (max-width: 1400px) {
-   .reactToBreakpoint.btnDrawer{
+    .reactToBreakpoint.btnDrawer {
         display: none;
     }
-      
-//:host ::ng-deep{    mat-drawer.reactToBreakpoint{  display: none;    }}
-  }
 
-  @media screen and (min-width: 1400px) {
-  .reactToBreakpoint.btnDrawer{
+    //:host ::ng-deep{    mat-drawer.reactToBreakpoint{  display: none;    }}
+}
+
+@media screen and (min-width: 1400px) {
+    .reactToBreakpoint.btnDrawer {
         position: absolute;
-        top:0px;
+        top: 0px;
         left: 0px;
         z-index: 10000;
         background-color: #424242;
         color: white;
         border: none;
     }
-.btnDrawer:hover{
-    color: yellow;
-}
 
-  }
+    .btnDrawer:hover {
+        color: yellow;
+    }
+
+}
 
 
 .map {
     min-height: 300px;
-    height:  calc(100vh - 120px);
+    height: calc(100vh - 120px);
     margin: 1px 2px;
+    background-color: #422958;
 }
-@media screen and (max-width:700px) {
 
+@media screen and (max-width:700px) {
     .map {
+        background-color: #422958;
+
         min-height: 300px;
-        height:  calc(100vh - 130px) !important;
+        height: calc(100vh - 140px) !important;
         margin: 1px 2px;
     }
 
-   }
- 
-  mat-drawer-content {
-    padding: 12px;
-  }
-  
-:host ::ng-deep{
+}
 
-    .tooltipIconWrapper{
+mat-drawer-content {
+    padding: 12px;
+}
+
+:host ::ng-deep {
+
+    .tooltipIconWrapper {
         display: inline-block;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         width: 25px;
         height: 25px;
-        background-size: 100%  100%;
-        text-shadow:0px 0px 10px #FF0000;
-       
+        background-size: 100% 100%;
+        text-shadow: 0px 0px 10px #FF0000;
+
     }
 
     .leaflet-tile {
         transform: translateZ(0);
         transform-origin: 50% 50%;
-      }
+    }
 
     .marker-cluster-small {
         background-color: rgba(151, 250, 58, 0.915);
-        }
+    }
+
     .marker-cluster-small div {
         background-color: rgba(110, 204, 57, 0.2);
-        }
-    
+    }
+
     .marker-cluster-medium {
         background-color: rgba(246, 240, 64, 0.91);
-        }
+    }
+
     .marker-cluster-medium div {
         background-color: rgba(240, 194, 12, 0.2);
-        }
-    
+    }
+
     .marker-cluster-large {
         background-color: rgba(248, 122, 68, 0.928);
-        }
+    }
+
     .marker-cluster-large div {
         background-color: rgba(241, 128, 23, 0.2);
-        }
+    }
 
 
 
-   
 
-    .INHABITANTS{
-        border: 3px dashed rgba(0, 139, 125, 0.841)  ;
+
+    .INHABITANTS {
+        border: 3px dashed rgba(0, 139, 125, 0.841);
         margin: -10px;
     }
 
-    .INHABITANTS_Marker{
-        border: 3px dashed rgba(0, 139, 125, 0.841)  ;
+    .INHABITANTS_Marker {
+        border: 3px dashed rgba(0, 139, 125, 0.841);
         width: auto;
         height: auto;
         font-size: medium;
         display: inline-block;
         margin: -10px;
-        border-radius:25%
+        border-radius: 25%
     }
 
-    .FLOOR_SPACE_M2{
+    .FLOOR_SPACE_M2 {
         border: 3px solid rgba(146, 42, 16, 0.714);
         margin: 10px;
     }
-    .FLOOR_SPACE_M2_Marker{
+
+    .FLOOR_SPACE_M2_Marker {
         margin: 10px;
-         border: 3px solid rgba(146, 42, 16, 0.714);
-         width: auto;
-         height: auto;
-         font-size: medium;
-         display: inline-block;
-         border-radius:10%;
+        border: 3px solid rgba(146, 42, 16, 0.714);
+        width: auto;
+        height: auto;
+        font-size: medium;
+        display: inline-block;
+        border-radius: 10%;
     }
 
 
-    .Netload_KWH{
-        border: 3px dashed rgba(23, 54, 232, 0.735)  ;
+    .Netload_KWH {
+        border: 3px dashed rgba(23, 54, 232, 0.735);
         margin: 6px;
     }
 
-    .Netload_KWH_Marker{
-        border: 3px dashed rgba(242, 10, 153, 0.841)  ;
+    .Netload_KWH_Marker {
+        border: 3px dashed rgba(242, 10, 153, 0.841);
         width: auto;
         height: auto;
         font-size: medium;
         display: inline-block;
         margin: 6px;
-        border-radius:25%
+        border-radius: 25%
     }
 
 
 
-    .Netload_M3{
-        border: 3px dashed rgba(234, 84, 9, 0.735)  ;
+    .Netload_M3 {
+        border: 3px dashed rgba(234, 84, 9, 0.735);
         margin: -10px;
         color: rgb(28, 28, 9);
     }
 
-    .Netload_M3_Marker{
+    .Netload_M3_Marker {
         background-color: #1890bb69;
         color: rgb(236, 239, 17);
-        border: 3px dashed rgba(13, 217, 240, 0.94)  ;
+        border: 3px dashed rgba(13, 217, 240, 0.94);
         width: auto;
         height: auto;
         font-size: medium;
         display: inline-block;
         margin: -10px;
-        border-radius:25%
+        border-radius: 25%
     }
+
     // .mycluster_FLOOR_SPACE_M2 {
     // }
 
     // .mycluster_INHABITANTS{
-        
+
     // }
 
     .leaflet-div-icon {
@@ -166,20 +175,22 @@
     .marker-cluster {
         background-clip: padding-box;
         border-radius: 20px;
-        }
+    }
+
     .marker-cluster div {
         min-width: 30px;
         max-width: 100px;
         min-height: 30px;
         max-height: 100px;
-         
-    
+
+
         text-align: center;
         border-radius: 15px;
         font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
-        }
+    }
+
     .marker-cluster span {
         line-height: 30px;
-        }
+    }
 
 }
