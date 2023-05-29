@@ -28,11 +28,11 @@
     height:  calc(100vh - 120px);
     margin: 1px 2px;
 }
-@media screen and (max-width:500px) {
+@media screen and (max-width:700px) {
 
     .map {
         min-height: 300px;
-        height:  calc(100vh - 130px);
+        height:  calc(100vh - 130px) !important;
         margin: 1px 2px;
     }
 
