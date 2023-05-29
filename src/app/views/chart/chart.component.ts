@@ -22,7 +22,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.componentActive = false;
   }
-  @ViewChild('map') map!: ElementRef<HTMLInputElement>;
+  @ViewChild('chartElem') chart!: ElementRef<HTMLInputElement>;
   constructor( private store: Store) {}
   
   Adresses$ = this.store.select(mapSelectors.selectAdresses).pipe(
@@ -64,7 +64,7 @@ export class ChartComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   prepareCharts() {
-    var myChart = echarts.init(this.map.nativeElement);
+    var myChart = echarts.init(this.chart.nativeElement);
     console.log('myChart', myChart);
     myChart.setOption({
       title: {

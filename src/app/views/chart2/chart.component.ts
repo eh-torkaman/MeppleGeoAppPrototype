@@ -20,7 +20,7 @@ export class ChartComponent2 implements OnInit, AfterViewInit , OnDestroy {
   ngOnDestroy(): void {
     this.componentActive = false;
   }
-  @ViewChild('map') map!: ElementRef<HTMLInputElement>;
+  @ViewChild('chartElem') chart!: ElementRef<HTMLInputElement>;
   constructor(private httpClient: HttpClient) {}
   ngOnInit(): void {
     
@@ -217,7 +217,7 @@ option = {
   ]
 };
 
-var myChart = echarts.init(this.map.nativeElement);
+var myChart = echarts.init(this.chart.nativeElement);
 myChart.setOption(option as any);
   }
 

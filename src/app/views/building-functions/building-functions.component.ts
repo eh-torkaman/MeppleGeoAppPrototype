@@ -20,7 +20,7 @@ import { BuildingFunction } from 'src/app/geojson.interfaces/Buildings';
   styleUrls: ['./building-functions.component.scss'],
 })
 export class PiechartComponent implements OnInit, AfterViewInit {
-  @ViewChild('map') map!: ElementRef<HTMLInputElement>;
+  @ViewChild('chartElem') chart!: ElementRef<HTMLInputElement>;
   constructor(private store: Store) {}
 
   Adresses$ = this.store.select(mapSelectors.selectAdresses).pipe(
@@ -204,7 +204,7 @@ export class PiechartComponent implements OnInit, AfterViewInit {
 
   prepareCharts() {
     if (!this.myChart)
-    this.myChart = echarts.init(this.map.nativeElement);
+    this.myChart = echarts.init(this.chart.nativeElement);
     this.myChart.setOption(this.option as any);
   }
 }
