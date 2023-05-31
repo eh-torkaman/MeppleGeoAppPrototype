@@ -67,12 +67,15 @@
 @media screen and (max-width:700px) {
   .logoTextClass {
     font-size: 0.8rem;
-    text-shadow: 1px 1px 0px #FFB650,
-      2px 2px 0px #FFD662,
-      3px 3px 0px #FF80BF,
-      4px 4px 0px #EF5097,
-      5px 5px 0px #6868AC,
-      6px 6px 0px #90B1E0;
+
+    text-shadow: 1px 1px 0px #fff, 2px 2px 0px hsl(0, 91%, 50%);
+  
+    // text-shadow: 1px 1px 0px #FFB650,
+    //   2px 2px 0px #FFD662,
+    //   3px 3px 0px #FF80BF,
+    //   4px 4px 0px #EF5097,
+    //   5px 5px 0px #6868AC,
+    //   6px 6px 0px #90B1E0;
   }
 
 
