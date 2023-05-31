@@ -4,8 +4,9 @@
   height: 100%;
 
 }
-.mainToolbar{
-  background: linear-gradient(90deg,  #161111  0%, #440979bf 60%, #00d7e1 100%) !important;
+
+.mainToolbar {
+  background: linear-gradient(90deg, #161111 0%, #440979bf 60%, #00d7e1 100%) !important;
 
 }
 
@@ -43,18 +44,20 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.1em;
   text-align: center;
-  color: #F9f1cc;
-  text-shadow: 2px 2px 0px #FFB650,
-    4px 4px 0px #FFD662,
-    6px 6px 0px #FF80BF,
-    8px 8px 0px #EF5097,
-    10px 10px 0px #6868AC,
-    12px 12px 0px #90B1E0;
+  color: #f9f9f9;
+  text-shadow: 2px 2px 0px #fff, 4px 4px 0px hsl(0, 0%, 0%), 6px 6px 0px #ff80bfb0, 8px 8px 0px #ef5097a3;
 
 }
 
+/*
+
+ text-shadow: 2px 2px 0px #100c06,
+    4px 4px 0px #645b3f,
+    6px 6px 0px #161214;
+
+*/
 @media screen and (max-width:900px) {
   .logoTextClass {
     font-size: 1.5rem;
@@ -65,13 +68,13 @@
   .logoTextClass {
     font-size: 0.8rem;
     text-shadow: 1px 1px 0px #FFB650,
-    2px 2px 0px #FFD662,
-    3px 3px 0px #FF80BF,
-    4px 4px 0px #EF5097,
-    5px 5px 0px #6868AC,
-    6px 6px 0px #90B1E0;
+      2px 2px 0px #FFD662,
+      3px 3px 0px #FF80BF,
+      4px 4px 0px #EF5097,
+      5px 5px 0px #6868AC,
+      6px 6px 0px #90B1E0;
   }
 
-  
+
 
 }
