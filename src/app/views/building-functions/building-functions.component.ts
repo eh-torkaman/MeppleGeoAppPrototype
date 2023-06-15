@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +21,7 @@ import { BuildingFunction } from 'src/app/geojson.interfaces/Buildings';
   styleUrls: ['./building-functions.component.scss'],
 })
 export class PiechartComponent implements OnInit, AfterViewInit {
+  @Input() showLegend=false;
   @ViewChild('chartElem') chart!: ElementRef<HTMLInputElement>;
   constructor(private store: Store) {}
 
@@ -132,6 +134,8 @@ export class PiechartComponent implements OnInit, AfterViewInit {
       });
 
       this.seriesOption.data = tmpData2;
+      if (this.showLegend) 
+      this.option.legend= { data: this.legends,textStyle:{color:'white'}};
       this.prepareCharts();
     });
   }

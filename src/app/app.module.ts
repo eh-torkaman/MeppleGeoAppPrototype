@@ -25,9 +25,11 @@ import { TblElectricityComponent } from './views/tbl-electricity/tbl-electricity
 import { TblgasComponent } from './views/tbl-gas/tbl-gas.component';
 import { TruncatePipe } from './truncate.pipe';
 import { PiechartComponent } from './views/building-functions/building-functions.component';
+import { DialogOverviewExampleDialog } from './leafdeck/side-views/dialog-overview-example-dialog';
 
 @NgModule({
   declarations: [
+    DialogOverviewExampleDialog,
     AppComponent,
     ChartComponent,
     ChartComponent2,
