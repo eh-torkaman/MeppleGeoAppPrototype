@@ -20,10 +20,13 @@ import {
   ],
 })
 export class DialogOverviewExampleDialog {
+  indexToBeShown=1;
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: {indexToBeShown:number}
+  ) {
+    this.indexToBeShown=this.data.indexToBeShown;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

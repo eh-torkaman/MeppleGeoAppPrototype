@@ -11,7 +11,7 @@ export class SideViewsComponent {
   constructor(public dialog: MatDialog) {}
 
 
-  openBuildingFunctionsDialog(){
+  openBuildingFunctionsDialog(indexToBeShown:number){
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
@@ -19,7 +19,7 @@ export class SideViewsComponent {
     dialogConfig.maxWidth=1500;
     dialogConfig.width="1200px";
     dialogConfig.height="900px";
-    dialogConfig.data={name: "dsfsdf", animal: "sdfsdf"};
+    dialogConfig.data={indexToBeShown };
     
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog, dialogConfig );
   

@@ -1,3 +1,7 @@
-    <app-building-functions [showLegend]="true"></app-building-functions>
+<app-building-functions *ngIf="indexToBeShown==1" [showLegend]="true"></app-building-functions>
+
+<app-building-owner *ngIf="indexToBeShown==2" [showLegend]="true"></app-building-owner>
+
+<app-building-build-year *ngIf="indexToBeShown==3" [showLegend]="true"></app-building-build-year>
  
  

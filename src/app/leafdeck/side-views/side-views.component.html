@@ -33,7 +33,7 @@
 </mat-expansion-panel>
 
 
-
+<!-- 
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -67,7 +67,7 @@
 
   <app-chart2></app-chart2>
 
-</mat-expansion-panel>
+</mat-expansion-panel>  -->
 
 
 
@@ -85,31 +85,10 @@
   </mat-expansion-panel-header>
 
   <app-building-functions></app-building-functions>
- 
-  <button mat-icon-button   color="accent" (click)="openBuildingFunctionsDialog()"  aria-label="open modal">
+
+  <button mat-icon-button color="accent" (click)="openBuildingFunctionsDialog(1)" aria-label="open modal">
     <mat-icon>open_in_new</mat-icon>
   </button>
-
-</mat-expansion-panel>
-
-
-
-
-<mat-expansion-panel>
-
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      building by build years
-    </mat-panel-title>
-    <mat-panel-description>
-
-      <mat-icon> pie_chart</mat-icon>
-
-    </mat-panel-description>
-  </mat-expansion-panel-header>
-
-  <app-building-build-year></app-building-build-year>
- 
 
 </mat-expansion-panel>
 
@@ -129,10 +108,38 @@
   </mat-expansion-panel-header>
 
   <app-building-owner></app-building-owner>
- 
-   
+  <button mat-icon-button color="accent" (click)="openBuildingFunctionsDialog(2)" aria-label="open modal">
+    <mat-icon>open_in_new</mat-icon>
+  </button>
+
 
 </mat-expansion-panel>
+
+
+
+<mat-expansion-panel>
+
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      building by build years
+    </mat-panel-title>
+    <mat-panel-description>
+
+      <mat-icon> pie_chart</mat-icon>
+
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <app-building-build-year></app-building-build-year>
+
+  <button mat-icon-button color="accent" (click)="openBuildingFunctionsDialog(3)" aria-label="open modal">
+    <mat-icon>open_in_new</mat-icon>
+  </button>
+</mat-expansion-panel>
+
+
+
+
 <mat-expansion-panel>
 
   <mat-expansion-panel-header>
@@ -164,6 +171,6 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-    <app-tbl-electricity></app-tbl-electricity>  
+  <app-tbl-electricity></app-tbl-electricity>
 
 </mat-expansion-panel>
