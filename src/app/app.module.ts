@@ -27,9 +27,10 @@ import { TruncatePipe } from './truncate.pipe';
 import { PiechartComponent } from './views/building-functions/building-functions.component';
 import { DialogOverviewExampleDialog } from './leafdeck/side-views/dialog-overview-example-dialog';
 import { BuildingOwnerComponent  } from './views/building-owner/building-owner.component';
+import { BuildingBuildYearComponent } from './views/building-build-year/building-build-year.component';
 
 @NgModule({
-  declarations: [
+  declarations: [BuildingBuildYearComponent,
     BuildingOwnerComponent,
     DialogOverviewExampleDialog,
     AppComponent,

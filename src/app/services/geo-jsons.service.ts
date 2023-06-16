@@ -20,6 +20,8 @@ import * as turf from '@turf/turf';
 import { debounce } from 'leaflet.glify';
 import { convertCollectionToMultipoints } from '../utils/helper';
 import { error } from 'console';
+import {TygronSectionGeometryFeatureProperties} from '../geojson.interfaces/TygronSectionGeometry'
+import {BuildingsFeatureProperties} from '../geojson.interfaces/Buildings'
 // import { type } from 'os';
 // const proj4 = require('proj4');
 declare var glob: any[];
@@ -100,7 +102,7 @@ export class GeoJsonsService {
           ]) => {
             this.setDataInDic(GeoJsonFileNameEnum.Adresses, Adresses);
 
-            this.setDataInDic(GeoJsonFileNameEnum.Buildings, Buildings);
+         
 
             try {
               //@ts-ignore
@@ -130,6 +132,21 @@ export class GeoJsonsService {
               tygron_section_geometry
             );
 
+            let dicTygronSectionGeometryByBuildingId:{[idx:number|string]:TygronSectionGeometryFeatureProperties}={};
+
+           tygron_section_geometry.features.forEach((f )=>{
+            let fp= f.properties as TygronSectionGeometryFeatureProperties;
+            dicTygronSectionGeometryByBuildingId[fp.buildingID]=fp;
+           });
+
+           for(let bf of Buildings.features){
+            let bfp= bf.properties as  BuildingsFeatureProperties;
+            bfp.__TygronSectionGeometryFeatureProperties=dicTygronSectionGeometryByBuildingId[bfp.ID];
+           }
+
+          this.setDataInDic(GeoJsonFileNameEnum.Buildings, Buildings);
+
+
             roadLine.features.forEach((f,ix)=>{ roadLine.features[ix].id=ix } )
             this.setDataInDic(GeoJsonFileNameEnum.RoadLine, roadLine);
             this.setDataInDic(GeoJsonFileNameEnum.RoadLineInShapeOfMultiPoint, convertCollectionToMultipoints(roadLine as turf.FeatureCollection<turf.LineString, turf.Properties>));
@@ -146,28 +163,28 @@ export class GeoJsonsService {
 
   public GetDataSource = () => this.loadData().pipe(map((db) => new Map(db)));
 
-  // remove this method later when you get ride of main app
-  public Get = (
-    key: GeoJsonFileNameEnum,
-    flattened = false
-  ): Promise<
-    GeoJSON.FeatureCollection<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>
-  > =>
-    new Promise<
-      GeoJSON.FeatureCollection<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>
-    >((resolve, reject) => {
-      of('').pipe(
-        delay(3000))
-        .subscribe
-        ((_) =>
-          this.loadData()
-            .pipe(take(1))
-            .subscribe(
-               (_) => {
-                resolve(this._db.get(key + (flattened ? '_F' : '')) as any);
-            })
-        )
-    });
+  // // remove this method later when you get ride of main app
+  // public Get = (
+  //   key: GeoJsonFileNameEnum,
+  //   flattened = false
+  // ): Promise<
+  //   GeoJSON.FeatureCollection<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>
+  // > =>
+  //   new Promise<
+  //     GeoJSON.FeatureCollection<GeoJSON.Geometry, GeoJSON.GeoJsonProperties>
+  //   >((resolve, reject) => {
+  //     of('').pipe(
+  //       delay(3000))
+  //       .subscribe
+  //       ((_) =>
+  //         this.loadData()
+  //           .pipe(take(1))
+  //           .subscribe(
+  //              (_) => {
+  //               resolve(this._db.get(key + (flattened ? '_F' : '')) as any);
+  //           })
+  //       )
+  //   });
 }
 
 export enum GeoJsonFileNameEnum {

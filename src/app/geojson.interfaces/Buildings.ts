@@ -1,5 +1,6 @@
 import { MultiPolygon, Polygon, Feature, FeatureCollection } from 'geojson';
 import { CRS } from "./_SharedTypes";
+import { TygronSectionGeometryFeatureProperties } from './TygronSectionGeometry';
 
 export interface BuildingsCollection<
   G extends Polygon | MultiPolygon,
@@ -18,6 +19,9 @@ export interface BuildingsFeature<
  
 
 export interface BuildingsFeatureProperties {
+
+  __TygronSectionGeometryFeatureProperties?:TygronSectionGeometryFeatureProperties,
+
   DISTURBANCE_DISTANCE_M: number[];
   GREEN_M2: number[];
   LUXE_PARKING_LOTS_PER_M2?: number[];
