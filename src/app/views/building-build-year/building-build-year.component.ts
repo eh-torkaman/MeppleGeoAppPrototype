@@ -21,7 +21,7 @@ import { BuildingFunction } from 'src/app/geojson.interfaces/Buildings';
   styleUrls: ['./building-build-year.component.scss'],
 })
 export class BuildingBuildYearComponent implements OnInit, AfterViewInit {
-  @Input() showLegend=true;
+  @Input() showLegend=false;
   @ViewChild('chartElem') chart!: ElementRef<HTMLInputElement>;
   constructor(private store: Store) {}
 
