@@ -2,18 +2,18 @@
 
 <div class="checkBoxesWrapper">
 
-<mat-checkbox [checked]="layersSetting.populationClusterd"  (change)="onChangCheckBox('populationClusterd', $event.checked)">  population clusters </mat-checkbox>
+<mat-checkbox [checked]="layersSetting.populationClusterd"  (change)="onChangCheckBox('populationClusterd', $event.checked)">  Population  </mat-checkbox>
   <!-- <mat-checkbox  [checked]="layersSetting.floorArea"  (change)="onChangCheckBox('floorArea', $event.checked)">  floorArea </mat-checkbox>  -->
-<mat-checkbox  [checked]="layersSetting.roofArea"  (change)="onChangCheckBox('roofArea', $event.checked)">  Roof clusters</mat-checkbox>
-<mat-checkbox  [checked]="layersSetting.cluster_VERBRUIK_KWH"  (change)="onChangCheckBox('cluster_VERBRUIK_KWH', $event.checked)"> VERBRUIK_KWH clusters</mat-checkbox>
-<mat-checkbox  [checked]="layersSetting.cluster_VERBRUIK_M3"  (change)="onChangCheckBox('cluster_VERBRUIK_M3', $event.checked)">  VERBRUIK_M3 clusters</mat-checkbox>
+<mat-checkbox  [checked]="layersSetting.roofArea"  (change)="onChangCheckBox('roofArea', $event.checked)">  Floor Area</mat-checkbox>
+<mat-checkbox  [checked]="layersSetting.cluster_VERBRUIK_KWH"  (change)="onChangCheckBox('cluster_VERBRUIK_KWH', $event.checked)"> VERBRUIK_KWH </mat-checkbox>
+<mat-checkbox  [checked]="layersSetting.cluster_VERBRUIK_M3"  (change)="onChangCheckBox('cluster_VERBRUIK_M3', $event.checked)">  VERBRUIK_M3 </mat-checkbox>
 
-<mat-checkbox  [checked]="layersSetting.buildings"  (change)="onChangCheckBox('buildings', $event.checked)">  buildings </mat-checkbox>
-<mat-checkbox  [checked]="layersSetting.energyLables"  (change)="onChangCheckBox('energyLables', $event.checked)">  energyLables </mat-checkbox>
-<mat-checkbox  [checked]="layersSetting.roads"  (change)="onChangCheckBox('roads', $event.checked)">  raods </mat-checkbox>
+<mat-checkbox  [checked]="layersSetting.buildings"  (change)="onChangCheckBox('buildings', $event.checked)">  Buildings </mat-checkbox>
+<mat-checkbox  [checked]="layersSetting.energyLables"  (change)="onChangCheckBox('energyLables', $event.checked)">  Energy Lables </mat-checkbox>
+<mat-checkbox  [checked]="layersSetting.roads"  (change)="onChangCheckBox('roads', $event.checked)"> Raods </mat-checkbox>
 <mat-checkbox  [checked]="layersSetting.energyConsumptionByStreets_KWH"  (change)="onChangCheckBox('energyConsumptionByStreets_KWH', $event.checked)"> 
-    Sum of Energy Consumption by Streets KWH</mat-checkbox>
+  Energy Consumption HeatMap per Street in Kilowatt-hours (KWh)</mat-checkbox>
 
 <mat-checkbox  [checked]="layersSetting.energyConsumptionByStreets_M3"  (change)="onChangCheckBox('energyConsumptionByStreets_M3', $event.checked)"> 
-    Sum of Energy Consumption by Streets  M3</mat-checkbox>
+  Energy Consumption HeatMap per Street in Cubic Meters (M3)</mat-checkbox>
 </div>
