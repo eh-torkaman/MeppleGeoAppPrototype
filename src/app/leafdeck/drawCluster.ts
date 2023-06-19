@@ -231,7 +231,7 @@ let getMarkerClusterGroup_INHABITANTS = () =>
         sum
       )} leaflet-zoom-animated leaflet-interactive" 
       tabindex="0"  z-index: 247; opacity: 1;">
-      <div><span title='sum of consumtion(VERBRUIK_KWH):${sum}'>${sum}</span></div></div>`,
+      <div><span title='sum of consumption (VERBRUIK_KWH):${sum}'>${sum}</span></div></div>`,
 
         className: 'mycluster_Netload_KWH',
         iconSize: L.point(40, 40),
@@ -317,7 +317,7 @@ let getMarkerClusterGroup_INHABITANTS = () =>
         sum
       )} leaflet-zoom-animated leaflet-interactive" 
       tabindex="0"  z-index: 247; opacity: 1;">
-      <div><span title='sum of consumtion(VERBRUIK_M3):${sum}'>${sum}</span></div></div>`,
+      <div><span title='sum of consumption (VERBRUIK_M3):${sum}'>${sum}</span></div></div>`,
 
         className: 'mycluster_Netload_M3',
         iconSize: L.point(40, 40),
